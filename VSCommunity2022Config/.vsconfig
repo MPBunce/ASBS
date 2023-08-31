@@ -70,7 +70,6 @@
     "Microsoft.VisualStudio.Component.Azure.Powershell",
     "Microsoft.VisualStudio.Workload.Azure",
     "Microsoft.Component.PythonTools",
-    "Component.CPython39.x64",
     "Microsoft.VisualStudio.Component.VC.CoreIde",
     "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
     "Microsoft.VisualStudio.Component.Graphics.Tools",
@@ -156,7 +155,6 @@
     "Microsoft.VisualStudio.Workload.Office",
     "Component.MDD.Linux",
     "Microsoft.VisualStudio.Component.Embedded",
-    "Component.Linux.CMake",
     "Component.Linux.RemoteFileExplorer",
     "Microsoft.VisualStudio.Workload.NativeCrossPlat"
   ]
