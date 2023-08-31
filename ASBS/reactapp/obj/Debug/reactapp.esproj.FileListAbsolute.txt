@@ -1,1 +1,2 @@
 C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\reactapp\obj\Debug\reactapp.esproj.CoreCompileInputs.cache
+E:\Programming\Projects\ASBS\ASBS\reactapp\obj\Debug\reactapp.esproj.CoreCompileInputs.cache
