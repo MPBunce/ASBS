@@ -26,8 +26,15 @@ namespace webapi.Models
         [JsonProperty("email")]
         public string Email { get; set;}
 
+        [JsonProperty("password")]
+        public string Password { get; set; }
+
         [JsonProperty("address")]
         public string Address { get; set;}
 
+        [JsonProperty("appointments")]
+        public List<Appointment> Appointments { get; set; }
+
     }
+
 }
