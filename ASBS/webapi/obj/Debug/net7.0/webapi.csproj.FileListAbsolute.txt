@@ -128,3 +128,16 @@ E:\Programming\Projects\ASBS\ASBS\webapi\obj\Debug\net7.0\refint\webapi.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\obj\Debug\net7.0\webapi.pdb
 E:\Programming\Projects\ASBS\ASBS\webapi\obj\Debug\net7.0\webapi.genruntimeconfig.cache
 E:\Programming\Projects\ASBS\ASBS\webapi\obj\Debug\net7.0\ref\webapi.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\BCrypt.Net-Next.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Scrutor.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
