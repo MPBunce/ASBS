@@ -62,11 +62,41 @@ namespace webapi.Service
 
         public async Task<Patient> GetPatient(string id)
         {
-            Patient patient = new Patient();
 
+            List<Patient> resultList = new List<Patient>();
             string query = $"SELECT DISTINCT * FROM c WHERE _id = '{id}'";
+            var queryResultSetIterator = _container.GetItemQueryIterator<Patient>(query);
 
-            return patient;
+            try
+            {
+                while (queryResultSetIterator.HasMoreResults)
+                {
+                    FeedResponse<Patient> currentResultSet = await queryResultSetIterator.ReadNextAsync();
+                    foreach (var item in currentResultSet)
+                    {
+                        // Process the retrieved items
+                        Console.WriteLine($"Item Id: {item}");
+
+                        // Add the item to the list
+                        resultList.Add(item);
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+
+            if (resultList.Count <= 0)
+            {
+                return null;
+            }
+
+            return resultList[0];
+
         }
 
     }

@@ -154,3 +154,5 @@ E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Scrutor.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Antlr3.Runtime.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\WebGrease.dll

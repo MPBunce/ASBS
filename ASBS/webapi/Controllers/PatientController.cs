@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
+using System.Web;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -83,7 +83,7 @@ namespace webapi.Controllers
         {
 
             string jwtToken;
-            string authorizationHeader = Context.Request.Headers["Authorization"].FirstOrDefault();
+            string authorizationHeader = Request.Headers["Authorization"].FirstOrDefault();
 
             // Check if the Authorization header exists and has a valid format
             if (!string.IsNullOrEmpty(authorizationHeader) && authorizationHeader.StartsWith("Bearer "))
