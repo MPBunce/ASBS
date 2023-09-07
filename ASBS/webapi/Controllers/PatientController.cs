@@ -8,6 +8,8 @@ using System.Security.Claims;
 using System.Text;
 using webapi.Models;
 using webapi.Service;
+using System.Net.Http.Headers;
+using System.Net;
 
 namespace webapi.Controllers
 {
@@ -82,15 +84,19 @@ namespace webapi.Controllers
         public async Task<ActionResult<Patient>> GetUserAndAppointment()
         {
 
-            string jwtToken;
-            string authorizationHeader = Request.Headers["Authorization"].FirstOrDefault();
+            var parameter;
+            string authorization = Request.Headers["Authorization"];
 
-            // Check if the Authorization header exists and has a valid format
-            if (!string.IsNullOrEmpty(authorizationHeader) && authorizationHeader.StartsWith("Bearer "))
+            if (AuthenticationHeaderValue.TryParse(authorization, out var headerValue))
             {
-                // Extract the token (remove "Bearer " prefix)
-                jwtToken = authorizationHeader.Substring("Bearer ".Length);
+                // we have a valid AuthenticationHeaderValue that has the following details:
 
+                var scheme = headerValue.Scheme;
+                parameter = headerValue.Parameter;
+
+                // scheme will be "Bearer"
+                // parmameter will be the token itself.
+                //return Ok(parameter);
             }
             else
             {
@@ -98,7 +104,8 @@ namespace webapi.Controllers
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.ReadJwtToken(jwtToken);
+
+            var token = tokenHandler.ReadJwtToken(parameter);
             var claims = token.Claims;
             var patientIdClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
 
