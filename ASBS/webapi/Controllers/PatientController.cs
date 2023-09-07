@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
@@ -31,7 +33,7 @@ namespace webapi.Controllers
         public static Patient patient = new Patient();
 
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<ActionResult<Patient>> RegisterAsync(Patient request)
         {
             Console.WriteLine(request);
@@ -51,8 +53,8 @@ namespace webapi.Controllers
             return Ok(result);
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<Patient>> LoginAsync(Auth request)
+        [HttpPost("Login")]
+        public async Task<ActionResult<String>> LoginAsync(Auth request)
         {
             string email = request.Email;
             string password = request.Password;
@@ -75,6 +77,52 @@ namespace webapi.Controllers
 
             return Ok(token);
         }
+
+        [HttpGet("GetUserAndAppointment"), Authorize]
+        public async Task<ActionResult<Patient>> GetUserAndAppointment()
+        {
+
+            string jwtToken;
+            string authorizationHeader = Context.Request.Headers["Authorization"].FirstOrDefault();
+
+            // Check if the Authorization header exists and has a valid format
+            if (!string.IsNullOrEmpty(authorizationHeader) && authorizationHeader.StartsWith("Bearer "))
+            {
+                // Extract the token (remove "Bearer " prefix)
+                jwtToken = authorizationHeader.Substring("Bearer ".Length);
+
+            }
+            else
+            {
+                return BadRequest("User Not Authorized");
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.ReadJwtToken(jwtToken);
+            var claims = token.Claims;
+            var patientIdClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+
+            if (patientIdClaim != null)
+            {
+                Patient patient = await _patientService.GetPatient( patientIdClaim.ToString() );
+            }
+            else
+            {
+                return BadRequest("Error");
+            }
+
+            return Ok(patient);
+
+        }
+
+        [HttpPost("CreateAppointment"), Authorize]
+
+        [HttpPut("UpdateUserAndAppointment"), Authorize]
+
+        [HttpDelete("DeleteAppointment"), Authorize]
+
+        [HttpDelete("DeleteUser"), Authorize]
+
 
 
 

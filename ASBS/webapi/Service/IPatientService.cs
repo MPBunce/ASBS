@@ -7,6 +7,8 @@ namespace webapi.Service
 
         Task<Patient> Register(Patient patient);
         Task<Patient> Login(String email);
+        Task<Patient> GetPatient(String id);
+    
 
     }
 }

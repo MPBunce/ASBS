@@ -43,7 +43,17 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
 
 // Connection to cosmodb
 
+builder.Services.AddSingleton<IPatientService>(options =>
+{
+    string url = builder.Configuration.GetSection("").GetValue<string>("https://asbs.documents.azure.com:443/");
+    string primaryKey = builder.Configuration.GetSection("").GetValue<string>("TnxTI79r47EJ3MG4c8zVGSVdaspyVSvLanzq6bia3nQHZZDtBbWWi37g6d9yOu6xYoZCai9DsMVGACDbR4EaRg==");
+    string dbName = builder.Configuration.GetSection("").GetValue<string>("ASBS");
+    string containerName = builder.Configuration.GetSection("").GetValue<string>("SpotPhysio");
 
+    var cosmosClient = new Microsoft.Azure.Cosmos.CosmosClient("https://asbs.documents.azure.com:443/", "TnxTI79r47EJ3MG4c8zVGSVdaspyVSvLanzq6bia3nQHZZDtBbWWi37g6d9yOu6xYoZCai9DsMVGACDbR4EaRg==");
+
+    return new PatientService(cosmosClient, "ASBS", "SpotPhysio");
+});
 
 
 

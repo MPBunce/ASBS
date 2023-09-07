@@ -15,10 +15,6 @@ namespace webapi.Service
             _container = cosmosClient.GetContainer(databaseName, containerName);
         }
 
-
-
-
-
         public async Task<Patient> Register(Patient patient)
         {
             var item = await _container.CreateItemAsync<Patient> (patient, new PartitionKey(patient.PatientId));
@@ -62,6 +58,15 @@ namespace webapi.Service
 
             return resultList[0];
 
+        }
+
+        public async Task<Patient> GetPatient(string id)
+        {
+            Patient patient = new Patient();
+
+            string query = $"SELECT DISTINCT * FROM c WHERE _id = '{id}'";
+
+            return patient;
         }
 
     }
