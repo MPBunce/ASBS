@@ -41,7 +41,6 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
 });
 
 
-// Connection to cosmodb
 
 
 

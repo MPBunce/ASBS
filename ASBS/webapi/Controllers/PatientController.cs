@@ -30,15 +30,13 @@ namespace webapi.Controllers
 
         }  
 
-        
-
         public static Patient patient = new Patient();
+        public static Appointment appointment = new Appointment();
 
-
-        [HttpPost("Register")]
+        [HttpPost("RegisterPatient")]
         public async Task<ActionResult<Patient>> RegisterAsync(Patient request)
         {
-            Console.WriteLine(request);
+            
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
@@ -74,9 +72,6 @@ namespace webapi.Controllers
 
 
             string token = CreateToken(result, _configuration);
-
-
-
             return Ok(token);
         }
 
@@ -84,19 +79,15 @@ namespace webapi.Controllers
         public async Task<ActionResult<Patient>> GetUserAndAppointment()
         {
 
-            var parameter;
+            var parameter = "";
             string authorization = Request.Headers["Authorization"];
 
             if (AuthenticationHeaderValue.TryParse(authorization, out var headerValue))
             {
                 // we have a valid AuthenticationHeaderValue that has the following details:
-
                 var scheme = headerValue.Scheme;
                 parameter = headerValue.Parameter;
 
-                // scheme will be "Bearer"
-                // parmameter will be the token itself.
-                //return Ok(parameter);
             }
             else
             {
@@ -104,33 +95,64 @@ namespace webapi.Controllers
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-
             var token = tokenHandler.ReadJwtToken(parameter);
-            var claims = token.Claims;
-            var patientIdClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
-
-            if (patientIdClaim != null)
+            var claim = token.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            if (claim == null)
             {
-                Patient patient = await _patientService.GetPatient( patientIdClaim.ToString() );
+                return BadRequest("User Not Authorized");
+            }
+
+            var result = await _patientService.GetPatient(claim.Value);
+            return Ok(result);
+        }
+
+
+        [HttpPost("CreateAppointment"), Authorize]
+        public async Task<ActionResult<Patient>> CreateAppointment(Appointment request)
+        {
+            var parameter = "";
+            string authorization = Request.Headers["Authorization"];
+
+            if (AuthenticationHeaderValue.TryParse(authorization, out var headerValue))
+            {
+                // we have a valid AuthenticationHeaderValue that has the following details:
+                var scheme = headerValue.Scheme;
+                parameter = headerValue.Parameter;
+
             }
             else
             {
-                return BadRequest("Error");
+                return BadRequest("User Not Authorized");
+            }
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.ReadJwtToken(parameter);
+            var claim = token.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            if (claim == null)
+            {
+                return BadRequest("User Not Authorized");
             }
 
-            return Ok(patient);
+            //Need to select Physiotherapist some home
+
+            appointment.AppointmentId = Guid.NewGuid().ToString();
+            appointment.Physiotherapist = request.Physiotherapist;
+            appointment.AppointmentDateTime = request.AppointmentDateTime;
+            appointment.Duration = request.Duration;
+            appointment.Notes = request.Notes;
+
+            var result = await _patientService.CreateAppointment(claim.Value, appointment);
+
+            return Ok(result);
 
         }
 
-        [HttpPost("CreateAppointment"), Authorize]
-
-        [HttpPut("UpdateUserAndAppointment"), Authorize]
+        [HttpPut("UpdateAppointment"), Authorize]
 
         [HttpDelete("DeleteAppointment"), Authorize]
 
+        [HttpPut("UpdateUser"), Authorize]
+
         [HttpDelete("DeleteUser"), Authorize]
-
-
 
 
         private string CreateToken(Patient patient, IConfiguration _configuration)

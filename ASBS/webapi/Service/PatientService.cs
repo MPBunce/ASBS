@@ -1,6 +1,9 @@
-﻿using Microsoft.Azure.Cosmos;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Azure.Cosmos;
 using System.ComponentModel;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using webapi.Models;
 
 namespace webapi.Service
@@ -17,7 +20,7 @@ namespace webapi.Service
 
         public async Task<Patient> Register(Patient patient)
         {
-            var item = await _container.CreateItemAsync<Patient> (patient, new PartitionKey(patient.PatientId));
+            var item = await _container.CreateItemAsync<Patient>(patient, new PartitionKey(patient.PatientId));
             return item;
         }
 
@@ -64,7 +67,7 @@ namespace webapi.Service
         {
 
             List<Patient> resultList = new List<Patient>();
-            string query = $"SELECT DISTINCT * FROM c WHERE _id = '{id}'";
+            string query = $"SELECT DISTINCT * FROM c WHERE c.id = '{id}'";
             var queryResultSetIterator = _container.GetItemQueryIterator<Patient>(query);
 
             try
@@ -74,8 +77,6 @@ namespace webapi.Service
                     FeedResponse<Patient> currentResultSet = await queryResultSetIterator.ReadNextAsync();
                     foreach (var item in currentResultSet)
                     {
-                        // Process the retrieved items
-                        Console.WriteLine($"Item Id: {item}");
 
                         // Add the item to the list
                         resultList.Add(item);
@@ -86,7 +87,6 @@ namespace webapi.Service
             }
             catch (Exception ex)
             {
-
                 return null;
             }
 
@@ -97,6 +97,22 @@ namespace webapi.Service
 
             return resultList[0];
 
+        }
+
+        public async Task<Patient> CreateAppointment(String id, Appointment appointment)
+        {
+
+            ItemResponse<Patient> response = await _container.ReadItemAsync<Patient>(id, new PartitionKey(id));
+            Patient patient = response.Resource;
+
+            if(appointment == null)
+            {
+                return null;
+            }
+
+            patient.Appointments.Add(appointment);
+            var secondResponse = await _container.ReplaceItemAsync(patient, id, new PartitionKey(id));
+            return secondResponse;
         }
 
     }

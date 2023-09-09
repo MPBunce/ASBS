@@ -5,7 +5,7 @@ namespace webapi.Models
 
     public class Physiotherapist
     {
-        [JsonProperty("physiotherapistId")]
+        [JsonProperty("id")]
         public string PhysiotherapistId { get; set; }
 
         [JsonProperty("firstName")]
