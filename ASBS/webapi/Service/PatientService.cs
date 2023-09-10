@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Azure.Cosmos;
+using Newtonsoft.Json.Linq;
 using System.ComponentModel;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
@@ -123,5 +124,79 @@ namespace webapi.Service
             return secondResponse;
         }
 
+        public async Task<Patient> UpdateAppointment(string patientId, Appointment newAppointment)
+        {
+            ItemResponse<Patient> existingDocument = await _container.ReadItemAsync<Patient>(patientId, new PartitionKey(patientId));
+            Patient patient = existingDocument.Resource;
+
+            int count = 0;
+
+            foreach(var appointment in patient.Appointments)
+            {
+                if(appointment.AppointmentId == newAppointment.AppointmentId)
+                {
+                    
+                    break;
+                }
+                else
+                {
+                    count ++;
+                }
+                
+            }
+            patient.Appointments[count] = newAppointment;
+
+
+            var response = await _container.ReplaceItemAsync(patient, patient.PatientId ,new PartitionKey(patient.PatientId));
+            return response;
+        }
+
+        public async Task<Patient> DeleteAppointment(string patientId, string appointmentId)
+        {
+            ItemResponse<Patient> existingDocument = await _container.ReadItemAsync<Patient>(patientId, new PartitionKey(patientId));
+            Patient patient = existingDocument.Resource;
+
+            int count = 0;
+
+            foreach (var appointment in patient.Appointments)
+            {
+                if (appointment.AppointmentId == appointmentId)
+                {
+
+                    break;
+                }
+                else
+                {
+                    count++;
+                }
+
+            }
+            patient.Appointments.RemoveAt(count);
+
+
+            var response = await _container.ReplaceItemAsync(patient, patient.PatientId, new PartitionKey(patient.PatientId));
+            return response;
+
+        }
+
+        public async Task<Patient> UpdateUser(Patient patient)
+        {
+            var response = await _container.ReplaceItemAsync(patient, patient.PatientId, new PartitionKey(patient.PatientId));
+            return response;
+        }
+
+        public async Task<string> DeleteUser(string id)
+        {
+            try
+            {
+                ItemResponse<Patient> existingDocument = await _container.DeleteItemAsync<Patient>(id, new PartitionKey(id));
+                return existingDocument.StatusCode.ToString();
+            }
+            catch
+            {
+                return "error";
+            }
+            
+        }
     }
 }

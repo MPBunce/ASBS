@@ -55,7 +55,7 @@ namespace webapi.Controllers
 
 
 
-        [HttpGet("GetAllPhysiotherapists")]
+        [HttpGet("GetAllPhysiotherapists"), Authorize(Roles = "Admin")]
 
         [HttpGet("GetOnePhysiotherapists")]
 
@@ -77,7 +77,8 @@ namespace webapi.Controllers
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, physiotherapist.PhysiotherapistId)
+                new Claim(ClaimTypes.Name, physiotherapist.PhysiotherapistId),
+                new Claim(ClaimTypes.Role, "Admin")
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(

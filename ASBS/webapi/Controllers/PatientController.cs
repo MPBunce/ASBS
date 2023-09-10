@@ -10,6 +10,9 @@ using webapi.Models;
 using webapi.Service;
 using System.Net.Http.Headers;
 using System.Net;
+using Azure.Core;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 
 namespace webapi.Controllers
 {
@@ -76,8 +79,7 @@ namespace webapi.Controllers
         }
 
 
-
-        [HttpGet("GetUserAndAppointment"), Authorize]
+        [HttpGet("GetUserAndAppointment"), Authorize(Roles = "User")]
         public async Task<ActionResult<Patient>> GetUserAndAppointment()
         {
 
@@ -108,7 +110,7 @@ namespace webapi.Controllers
             return Ok(result);
         }
 
-        [HttpPost("CreateAppointment"), Authorize]
+        [HttpPost("CreateAppointment"), Authorize(Roles = "User")]
         public async Task<ActionResult<Patient>> CreateAppointment(Appointment request, string physioId)
         {
             var parameter = "";
@@ -134,6 +136,10 @@ namespace webapi.Controllers
             }
 
             //Need to select Physiotherapist some home
+            if (physioId == null)
+            {
+                return BadRequest("Issue finding physio");
+            }
 
             appointment.AppointmentId = Guid.NewGuid().ToString();
             appointment.Physiotherapist = await _physiotherapistService.GetPhysiotherapist(physioId);
@@ -147,22 +153,186 @@ namespace webapi.Controllers
 
         }
 
-        [HttpPut("UpdateAppointment"), Authorize]
+        [HttpPut("UpdateAppointment"), Authorize(Roles = "User")]
+        public async Task<ActionResult<Patient>> UpdateAppointment(Appointment request, string physioId)
+        {
+            var parameter = "";
+            string authorization = Request.Headers["Authorization"];
 
-        [HttpDelete("DeleteAppointment"), Authorize]
+            if (AuthenticationHeaderValue.TryParse(authorization, out var headerValue))
+            {
+                // we have a valid AuthenticationHeaderValue that has the following details:
+                var scheme = headerValue.Scheme;
+                parameter = headerValue.Parameter;
+
+            }
+            else
+            {
+                return BadRequest("User Not Authorized");
+            }
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.ReadJwtToken(parameter);
+            var claim = token.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            if (claim == null)
+            {
+                return BadRequest("User Not Authorized");
+            }
+
+            //Need to select Physiotherapist some home
+            if (physioId == null)
+            {
+                return BadRequest("Issue finding physio");
+            }
+
+            appointment.AppointmentId = request.AppointmentId;
+            appointment.Physiotherapist = await _physiotherapistService.GetPhysiotherapist(physioId);
+            appointment.AppointmentDateTime = request.AppointmentDateTime;
+            appointment.Duration = request.Duration;
+            appointment.Notes = request.Notes;
+
+
+            var result = await _patientService.UpdateAppointment(claim.Value, appointment);
+
+            return Ok(result);
+
+        }
+
+        [HttpDelete("DeleteAppointment"), Authorize(Roles = "User")]
+        public async Task<ActionResult<Patient>> DeleteAppointment(string appointmentId)
+        {
+            var parameter = "";
+            string authorization = Request.Headers["Authorization"];
+
+            if (AuthenticationHeaderValue.TryParse(authorization, out var headerValue))
+            {
+                // we have a valid AuthenticationHeaderValue that has the following details:
+                var scheme = headerValue.Scheme;
+                parameter = headerValue.Parameter;
+
+            }
+            else
+            {
+                return BadRequest("User Not Authorized");
+            }
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.ReadJwtToken(parameter);
+            var claim = token.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            if (claim == null)
+            {
+                return BadRequest("User Not Authorized");
+            }
+
+            //Need to select Physiotherapist some home
+            if (appointmentId == null)
+            {
+                return BadRequest("Issue finding appointment");
+            }
+
+
+            var result = await _patientService.DeleteAppointment(claim.Value, appointmentId);
+
+            return Ok(result);
+        }
+
+
+        [HttpPut("UpdateUser"), Authorize(Roles = "User")]
+        public async Task<ActionResult<Patient>> UpdateUser(Patient request)
+        {
+            var parameter = "";
+            string authorization = Request.Headers["Authorization"];
+
+            if (AuthenticationHeaderValue.TryParse(authorization, out var headerValue))
+            {
+                // we have a valid AuthenticationHeaderValue that has the following details:
+                var scheme = headerValue.Scheme;
+                parameter = headerValue.Parameter;
+
+            }
+            else
+            {
+                return BadRequest("User Not Authorized");
+            }
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.ReadJwtToken(parameter);
+            var claim = token.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            if (claim == null)
+            {
+                return BadRequest("User Not Authorized");
+            }
+        
+            if(claim.Value != request.PatientId)
+            {
+                return BadRequest("Error with id");
+            }
 
 
 
-        [HttpPut("UpdateUser"), Authorize]
 
-        [HttpDelete("DeleteUser"), Authorize]
+            //Get Existing using id
+            var currentUser = await _patientService.GetPatient(claim.Value);
 
+            //Update new info
+            patient.FirstName = request.FirstName;
+            patient.LastName = request.LastName;
+            patient.PhoneNumber = request.PhoneNumber;
+            patient.Email = request.Email;
+
+            if (!BCrypt.Net.BCrypt.Verify(request.Password, currentUser.Password))
+            {
+
+                patient.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+            }            
+
+            patient.Appointments = new List<Appointment>();
+            patient.Appointments = currentUser.Appointments;
+
+
+            //Send Update
+
+            var updateResult = await _patientService.UpdateUser(patient);
+
+            return Ok(updateResult);
+
+        }
+
+
+        [HttpDelete("DeleteUser"), Authorize(Roles = "User")]
+        public async Task<ActionResult<string>> DeleteUser()
+        {
+            var parameter = "";
+            string authorization = Request.Headers["Authorization"];
+
+            if (AuthenticationHeaderValue.TryParse(authorization, out var headerValue))
+            {
+                // we have a valid AuthenticationHeaderValue that has the following details:
+                var scheme = headerValue.Scheme;
+                parameter = headerValue.Parameter;
+
+            }
+            else
+            {
+                return BadRequest("User Not Authorized");
+            }
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.ReadJwtToken(parameter);
+            var claim = token.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            if (claim == null)
+            {
+                return BadRequest("User Not Authorized");
+            }
+
+            var result = await _patientService.DeleteUser(claim.Value);
+            return result;
+
+        }
 
         private string CreateToken(Patient patient, IConfiguration _configuration)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, patient.PatientId)
+                new Claim(ClaimTypes.Name, patient.PatientId),
+                new Claim(ClaimTypes.Role, "User")
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
