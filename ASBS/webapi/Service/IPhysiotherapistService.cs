@@ -1,4 +1,5 @@
-﻿using webapi.Models;
+﻿using System.Security.Claims;
+using webapi.Models;
 
 namespace webapi.Service
 {
@@ -7,6 +8,7 @@ namespace webapi.Service
 
         Task<Physiotherapist> Register(Physiotherapist physiotherapist);
         Task<Physiotherapist> Login (string email);
+        Task<Physiotherapist> GetPhysiotherapist(string id);
 
     }
 }

@@ -21,14 +21,14 @@ namespace webapi.Controllers
 
         public readonly IPatientService _patientService;
         private readonly IConfiguration _configuration;
+        private readonly IPhysiotherapistService _physiotherapistService;
 
-
-        public PatientController(IPatientService patientsService, IConfiguration configuration)
+        public PatientController(IPatientService patientsService, IConfiguration configuration, IPhysiotherapistService physiotherapistService)
         {
             _patientService = patientsService;
             _configuration = configuration;
-
-        }  
+            _physiotherapistService = physiotherapistService;
+        }
 
         public static Patient patient = new Patient();
         public static Appointment appointment = new Appointment();
@@ -75,6 +75,8 @@ namespace webapi.Controllers
             return Ok(token);
         }
 
+
+
         [HttpGet("GetUserAndAppointment"), Authorize]
         public async Task<ActionResult<Patient>> GetUserAndAppointment()
         {
@@ -106,9 +108,8 @@ namespace webapi.Controllers
             return Ok(result);
         }
 
-
         [HttpPost("CreateAppointment"), Authorize]
-        public async Task<ActionResult<Patient>> CreateAppointment(Appointment request)
+        public async Task<ActionResult<Patient>> CreateAppointment(Appointment request, string physioId)
         {
             var parameter = "";
             string authorization = Request.Headers["Authorization"];
@@ -135,7 +136,7 @@ namespace webapi.Controllers
             //Need to select Physiotherapist some home
 
             appointment.AppointmentId = Guid.NewGuid().ToString();
-            appointment.Physiotherapist = request.Physiotherapist;
+            appointment.Physiotherapist = await _physiotherapistService.GetPhysiotherapist(physioId);
             appointment.AppointmentDateTime = request.AppointmentDateTime;
             appointment.Duration = request.Duration;
             appointment.Notes = request.Notes;
@@ -149,6 +150,8 @@ namespace webapi.Controllers
         [HttpPut("UpdateAppointment"), Authorize]
 
         [HttpDelete("DeleteAppointment"), Authorize]
+
+
 
         [HttpPut("UpdateUser"), Authorize]
 

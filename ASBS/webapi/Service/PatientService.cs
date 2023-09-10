@@ -110,7 +110,15 @@ namespace webapi.Service
                 return null;
             }
 
-            patient.Appointments.Add(appointment);
+            if(patient.Appointments == null)
+            {
+                patient.Appointments = new List<Appointment> { appointment };
+            }
+            else
+            {
+                patient.Appointments.Add(appointment);
+            }
+            
             var secondResponse = await _container.ReplaceItemAsync(patient, id, new PartitionKey(id));
             return secondResponse;
         }

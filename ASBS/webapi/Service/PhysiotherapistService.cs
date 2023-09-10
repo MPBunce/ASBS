@@ -19,17 +19,21 @@ namespace webapi.Service
         }
 
 
-
-        public Task<Physiotherapist> Login(string email)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Physiotherapist> Register(Physiotherapist physiotherapist)
         {
             var item = await _container.CreateItemAsync<Physiotherapist>(physiotherapist, new PartitionKey(physiotherapist.PhysiotherapistId));
             return item;
         }
 
+        public Task<Physiotherapist> Login(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Physiotherapist> GetPhysiotherapist(string id)
+        {
+            var item = await _container.ReadItemAsync<Physiotherapist>(id, new PartitionKey(id));
+            return item;
+        }
     }
 }

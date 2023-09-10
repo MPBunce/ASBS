@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using webapi.Models;
@@ -49,27 +51,27 @@ namespace webapi.Controllers
             return Ok(result);
         }
 
-        //[HttpPost("Login")]
-        //public async Task<ActionResult<String>> LoginAsync(Auth request)
-        //{
-        //    string email = request.Email;
-        //    string password = request.Password;
-
-        //    var result = await _patientService.Login(email);
-        //    if (result == null)
-        //    {
-        //        return BadRequest("Error incorrect email or password");
-        //    }
-
-        //    if (!BCrypt.Net.BCrypt.Verify(password, result.Password))
-        //    {
-        //        return BadRequest("Error incorrect password");
-        //    }
+        [HttpPost("Login")]
 
 
-        //    string token = CreateToken(result, _configuration);
-        //    return Ok(token);
-        //}
+
+        [HttpGet("GetAllPhysiotherapists")]
+
+        [HttpGet("GetOnePhysiotherapists")]
+
+
+        //Create app
+
+        //update app
+
+        //delete app
+
+
+
+        //Update Physio Therapist
+
+        //Delete Physio Therapist
+
 
         private string CreateToken(Physiotherapist physiotherapist, IConfiguration _configuration)
         {
