@@ -265,9 +265,6 @@ namespace webapi.Controllers
                 return BadRequest("Error with id");
             }
 
-
-
-
             //Get Existing using id
             var currentUser = await _patientService.GetPatient(claim.Value);
 
@@ -289,7 +286,6 @@ namespace webapi.Controllers
 
 
             //Send Update
-
             var updateResult = await _patientService.UpdateUser(patient);
 
             return Ok(updateResult);

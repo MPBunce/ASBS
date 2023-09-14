@@ -25,15 +25,88 @@ namespace webapi.Service
             return item;
         }
 
-        public Task<Physiotherapist> Login(string email)
+        public async Task<Physiotherapist> Login(string email)
         {
-            throw new NotImplementedException();
+            List<Physiotherapist> resultList = new List<Physiotherapist>();
+            string query = $"SELECT DISTINCT * FROM c WHERE c.email = '{email}'";
+
+            var queryResultSetIterator = _container.GetItemQueryIterator<Physiotherapist>(query);
+
+            try
+            {
+
+                while (queryResultSetIterator.HasMoreResults)
+                {
+                    FeedResponse<Physiotherapist> currentResultSet = await queryResultSetIterator.ReadNextAsync();
+                    foreach (var item in currentResultSet)
+                    {
+                        // Process the retrieved items
+                        Console.WriteLine($"Item Id: {item}");
+
+                        // Add the item to the list
+                        resultList.Add(item);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+
+            if (resultList.Count <= 0)
+            {
+                return null;
+            }
+
+            return resultList[0];
         }
 
         public async Task<Physiotherapist> GetPhysiotherapist(string id)
         {
             var item = await _container.ReadItemAsync<Physiotherapist>(id, new PartitionKey(id));
             return item;
+        }
+
+        public async Task<Physiotherapist> UpdatePhysiotherapist(Physiotherapist physiotherapist)
+        {
+            var result = await _container.ReplaceItemAsync(physiotherapist, physiotherapist.PhysiotherapistId, new PartitionKey(physiotherapist.PhysiotherapistId));
+            return result;
+        }
+
+        public async Task<string> DeletePhysiotherapist(string id)
+        {
+            try
+            {
+                ItemResponse<Physiotherapist> existingDocument = await _container.DeleteItemAsync<Physiotherapist>(id, new PartitionKey(id));
+                return "User deleted";
+            }
+            catch
+            {
+                return "Error";
+            }
+        }
+        
+        public async Task<Patient> ReadPatientHistory(string patientId)
+        {
+            var item = await _container.ReadItemAsync<Patient>(patientId, new PartitionKey(patientId));
+            return item;
+        }
+
+        public async Task<Patient> CreatePatientsAppointment(string patientId, Appointment appointment)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Patient> UpdatePatientsAppointment(string patientId, Appointment appointment)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Patient> DeletePatientsAppointment(string patientId, Appointment appointment)
+        {
+            throw new NotImplementedException();
         }
     }
 }

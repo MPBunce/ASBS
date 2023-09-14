@@ -190,11 +190,11 @@ namespace webapi.Service
             try
             {
                 ItemResponse<Patient> existingDocument = await _container.DeleteItemAsync<Patient>(id, new PartitionKey(id));
-                return existingDocument.StatusCode.ToString();
+                return "User deleted";
             }
             catch
             {
-                return "error";
+                return "Error";
             }
             
         }
