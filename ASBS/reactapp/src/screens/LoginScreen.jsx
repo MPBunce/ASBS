@@ -37,7 +37,8 @@ const LoginScreen = () => {
             dispatch(setToken(res.token))
 
             const userData = await getUserData(res.token).unwrap();
-            console.log(userData)
+            dispatch(setCredentials(userData))
+            navigate('/')
 
         } catch (error) {
             console.log(error)

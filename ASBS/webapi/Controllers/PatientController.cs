@@ -59,8 +59,8 @@ namespace webapi.Controllers
             patient.Appointments = null;
 
             var result = await _patientService.Register(patient);
-
-            return Ok(result);
+            string token = CreateToken(result, _configuration);
+            return Ok(new { Token = token, user = result });
         }
 
         [HttpPost("Login")]
