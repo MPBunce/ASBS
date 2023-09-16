@@ -34,6 +34,10 @@ export default defineConfig({
             '^/weatherforecast': {
                 target: 'https://localhost:7064/',
                 secure: false
+            },
+            '^/Patient': {
+                target: 'https://localhost:7064/',
+                secure: false
             }
         },
         port: 5173,

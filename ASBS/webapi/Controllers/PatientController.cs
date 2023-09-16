@@ -19,6 +19,7 @@ namespace webapi.Controllers
 
     [ApiController]
     [Route("[controller]")]
+
     public class PatientController : ControllerBase
     {
 
@@ -35,6 +36,12 @@ namespace webapi.Controllers
 
         public static Patient patient = new Patient();
         public static Appointment appointment = new Appointment();
+
+        [HttpGet("HelloWorld")] 
+        public string Get()
+        {
+            return "Hellow World";
+        }
 
         [HttpPost("RegisterPatient")]
         public async Task<ActionResult<Patient>> RegisterAsync(Patient request)
@@ -57,7 +64,7 @@ namespace webapi.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<String>> LoginAsync(Auth request)
+        public async Task<ActionResult<JSON>> LoginAsync(Auth request)
         {
             string email = request.Email;
             string password = request.Password;
@@ -75,7 +82,7 @@ namespace webapi.Controllers
 
 
             string token = CreateToken(result, _configuration);
-            return Ok(token);
+            return Ok(new { Token = token });
         }
 
 
