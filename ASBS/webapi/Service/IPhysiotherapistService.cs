@@ -15,8 +15,8 @@ namespace webapi.Service
         Task<Patient> CreatePatientsAppointment(string patientId, Appointment appointment);
         Task<Patient> ReadPatientHistory(string patientId);
         Task<Patient> UpdatePatientsAppointment(string patientId, Appointment appointment);
-        Task<Patient> DeletePatientsAppointment(string patientId, Appointment appointment);
-
+        Task<Patient> DeletePatientsAppointment(string patientId, string appointmentId);
+        Task<List<Physiotherapist>> GetAllPhysiotherapists();
 
     }
 }

@@ -279,6 +279,8 @@ namespace webapi.Controllers
 
                 patient.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
+            } else {
+                patient.Password = currentUser.Password;
             }            
 
             patient.Appointments = new List<Appointment>();

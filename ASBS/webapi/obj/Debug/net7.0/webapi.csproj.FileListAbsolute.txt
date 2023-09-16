@@ -63,6 +63,21 @@ C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.
 C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\BCrypt.Net-Next.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Scrutor.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Antlr3.Runtime.dll
+C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\WebGrease.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Azure.Cosmos.ServiceInterop.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Cosmos.CRTCompat.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\msvcp140.dll
@@ -75,9 +90,12 @@ E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\webapi.deps.json
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\webapi.runtimeconfig.json
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\webapi.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\webapi.pdb
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Antlr3.Runtime.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Azure.Core.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Azure.ResourceManager.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Azure.ResourceManager.CosmosDB.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\BCrypt.Net-Next.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Azure.Cosmos.Client.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Azure.Cosmos.Core.dll
@@ -85,18 +103,30 @@ E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Azure.Cosmos
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Azure.Cosmos.Serialization.HybridRow.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Bcl.HashCode.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.OpenApi.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Newtonsoft.Json.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Scrutor.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\System.Drawing.Common.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\System.Memory.Data.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\System.Security.Permissions.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\System.Windows.Extensions.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\WebGrease.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\runtimes\win-x64\native\Cosmos.CRTCompat.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\runtimes\win-x64\native\Microsoft.Azure.Cosmos.ServiceInterop.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\runtimes\win-x64\native\msvcp140.dll
@@ -128,33 +158,3 @@ E:\Programming\Projects\ASBS\ASBS\webapi\obj\Debug\net7.0\refint\webapi.dll
 E:\Programming\Projects\ASBS\ASBS\webapi\obj\Debug\net7.0\webapi.pdb
 E:\Programming\Projects\ASBS\ASBS\webapi\obj\Debug\net7.0\webapi.genruntimeconfig.cache
 E:\Programming\Projects\ASBS\ASBS\webapi\obj\Debug\net7.0\ref\webapi.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\BCrypt.Net-Next.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Scrutor.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\BCrypt.Net-Next.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Scrutor.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Antlr3.Runtime.dll
-E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\WebGrease.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Antlr3.Runtime.dll
-C:\Users\tenzi\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\WebGrease.dll

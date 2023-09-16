@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,6 +20,7 @@ namespace webapi.Controllers
         public readonly IPhysiotherapistService _physioService;
         private readonly IConfiguration _configuration;
 
+
         public PhysiotherapistController(IPhysiotherapistService physioService, IConfiguration configuration)
         {
             _physioService = physioService;
@@ -26,7 +28,10 @@ namespace webapi.Controllers
 
         }
 
+
         public static Physiotherapist physio = new Physiotherapist();
+        public static Appointment appointment = new Appointment();
+
 
         [HttpPost("RegisterPhysiotherapist")]
         public async Task<ActionResult<Physiotherapist>> RegisterAsync(Physiotherapist request)
@@ -74,7 +79,11 @@ namespace webapi.Controllers
         }
 
         [HttpGet("GetAllPhysiotherapists")]
-
+        public async Task<ActionResult<List<Physiotherapist>>> GetAllPhysiotherapists()
+        {
+            var result = await _physioService.GetAllPhysiotherapists();
+            return result;
+        }
 
         [HttpGet("GetOnePhysiotherapists"), Authorize(Roles = "Admin")]
         public async Task<ActionResult<Physiotherapist>> GetOnePhysiotherapist()
@@ -107,8 +116,8 @@ namespace webapi.Controllers
 
 
         //Update Physio Therapist
-        [HttpPut("UpdateUser"), Authorize(Roles = "Admin")]
-        public async Task<ActionResult<Physiotherapist>> UpdatePhysiotherapist(Physiotherapist physiotherapist)
+        [HttpPut("UpdatePhysiotherapist"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Physiotherapist>> UpdatePhysiotherapist(Physiotherapist newPhysiotherapist)
         {
             var parameter = "";
             string authorization = Request.Headers["Authorization"];
@@ -131,19 +140,42 @@ namespace webapi.Controllers
             {
                 return BadRequest("User Not Authorized");
             }
-            if(claim.Value != physiotherapist.PhysiotherapistId)
+            if(claim.Value != newPhysiotherapist.PhysiotherapistId)
             {
                 return BadRequest("Issue with ID");
             }
 
-            var response = await _physioService.UpdatePhysiotherapist(physiotherapist);
+            var currentUser = await _physioService.GetPhysiotherapist(claim.Value);
+
+            physio.PhysiotherapistId = currentUser.PhysiotherapistId;
+            physio.FirstName = newPhysiotherapist.FirstName;
+            physio.LastName = newPhysiotherapist.LastName;
+            physio.ContactNumber = newPhysiotherapist.ContactNumber;
+            physio.Email = newPhysiotherapist.Email;
+            physio.Specialization = newPhysiotherapist.Specialization;
+            physio.WorkingDays = newPhysiotherapist.WorkingDays;
+            physio.WorkingHoursStart = newPhysiotherapist.WorkingHoursStart;
+            physio.WorkingHoursEnd = newPhysiotherapist.WorkingHoursEnd;
+
+            if (!BCrypt.Net.BCrypt.Verify(newPhysiotherapist.Password, currentUser.Password))
+            {
+
+                physio.Password = BCrypt.Net.BCrypt.HashPassword(newPhysiotherapist.Password);
+
+            } else {
+                physio.Password = currentUser.Password;
+            }
+
+            var response = await _physioService.UpdatePhysiotherapist(physio);
             return Ok(response);   
 
         }
+
+
+
         //Delete Physio Therapist
-        [HttpDelete("UpdateUser"), Authorize(Roles = "Admin")]
-        [HttpPut("UpdateUser"), Authorize(Roles = "Admin")]
-        public async Task<ActionResult<string>> UpdatePhysiotherapist(string id)
+        [HttpDelete("DeletePhysiotherapist"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<string>> DeletePhysiotherapist()
         {
             var parameter = "";
             string authorization = Request.Headers["Authorization"];
@@ -166,27 +198,27 @@ namespace webapi.Controllers
             {
                 return BadRequest("User Not Authorized");
             }
-            if (claim.Value != id)
-            {
-                return BadRequest("Issue with ID");
-            }
 
-            var response = await _physioService.DeletePhysiotherapist(id);
+
+            var response = await _physioService.DeletePhysiotherapist(claim.Value);
             return Ok(response);
 
         }
 
-        //Read Histort
+        //Read History
         [HttpGet("ReadPatientHistory"), Authorize(Roles = "Admin")]
         public async Task<ActionResult<Patient>> ReadPatientHistory(string id)
         {
             var response = await _physioService.ReadPatientHistory(id);
             return Ok(response);
         }
+        
+        
         //Create app
         [HttpPut("CreatePatientsAppointment"), Authorize(Roles = "Admin")]
         public async Task<ActionResult<Patient>> CreatePatientsAppointment(string id, Appointment appointment)
         {
+            appointment.AppointmentId = Guid.NewGuid().ToString();
             var response = await _physioService.CreatePatientsAppointment(id, appointment);
             return Ok(response);
         }
@@ -200,10 +232,10 @@ namespace webapi.Controllers
         }
 
         //delete app
-        [HttpPut("DeletePatientsAppointment"), Authorize(Roles = "Admin")]
-        public async Task<ActionResult<Patient>> DeletePatientsAppointment(string id, Appointment appointment)
+        [HttpDelete("DeletePatientsAppointment"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Patient>> DeletePatientsAppointment(string id, string appointmentId)
         {
-            var response = await _physioService.DeletePatientsAppointment(id, appointment);
+            var response = await _physioService.DeletePatientsAppointment(id, appointmentId);
             return Ok(response);
         }
 
