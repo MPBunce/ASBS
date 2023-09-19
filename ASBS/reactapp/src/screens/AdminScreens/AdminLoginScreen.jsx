@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import FormContainer from '../components/FormContainer';
+import FormContainer from '../../components/FormContainer';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation, useGetUserDataMutation } from '../slices/userApiSlice';
-import { setCredentials, setToken } from '../slices/authSlice';
+import { useAdminLoginMutation, useGetAdminDataMutation } from '../../slices/userApiSlice';
+import { setAdminToken, setAdminCredentials } from '../../slices/authSlice';
+import { toast } from 'react-toastify';
+import Loader from '../../components/Loader';
 
-const LoginScreen = () => {
+const AdminLoginScreen = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -14,18 +16,18 @@ const LoginScreen = () => {
     const [email, setEmail] = useState();
     const [password, setpassword] = useState();
 
-    const [login, { isLoadingLogin } ] = useLoginMutation();
-    const [getUserData, { isLoadingUserData }] = useGetUserDataMutation();
+    const [adminLogin, { isLoadingLogin }] = useAdminLoginMutation();
+    const [getAdminData, { isLoadingUserData }] = useGetAdminDataMutation();
 
-    const { userInfo } = useSelector((state) => state.auth);
+    const { adminInfo } = useSelector((state) => state.auth);
 
 
 
     useEffect(() => {
-        if (userInfo) {
+        if (adminInfo) {
             navigate('/');
         }
-    }, navigate, userInfo);
+    }, navigate, adminInfo);
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -33,14 +35,16 @@ const LoginScreen = () => {
 
             console.log("Submitted ")
 
-            const res = await login({ email, password }).unwrap()
-            dispatch(setToken(res.token))
+            const res = await adminLogin({ email, password }).unwrap()
+            dispatch(setAdminToken(res.token))
 
-            const userData = await getUserData(res.token).unwrap();
-            dispatch(setCredentials(userData))
-            navigate('/')
+            const userData = await getAdminData().unwrap();
+            console.log(userData)
+            dispatch(setAdminCredentials(userData))
+            navigate('/admin/home')
 
         } catch (error) {
+            toast.error(error.data || error.error)
             console.log(error)
         }
     }
@@ -59,9 +63,9 @@ const LoginScreen = () => {
                         type='email'
                         placeholder='Enter Email'
                         value={email}
-                        onChange={ (e) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                     >
-                            
+
                     </Form.Control>
                 </Form.Group>
 
@@ -77,15 +81,11 @@ const LoginScreen = () => {
                     </Form.Control>
                 </Form.Group>
 
+                {isLoadingLogin && isLoadingUserData && <Loader />}
+
                 <Button className='mt-3' type='submit' variant='primary'>
                     Sign In
                 </Button>
-
-                <Row className='py-3'>
-                    <Col>
-                        New Patient? <Link to='/register'>Register</Link>
-                    </Col>
-                </Row>
 
             </Form>
         </FormContainer>
@@ -94,4 +94,4 @@ const LoginScreen = () => {
     )
 }
 
-export default LoginScreen
+export default AdminLoginScreen

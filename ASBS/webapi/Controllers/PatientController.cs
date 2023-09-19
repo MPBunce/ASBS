@@ -60,7 +60,7 @@ namespace webapi.Controllers
 
             var result = await _patientService.Register(patient);
             string token = CreateToken(result, _configuration);
-            return Ok(new { Token = token, user = result });
+            return Ok(new { token = token, user = result });
         }
 
         [HttpPost("Login")]

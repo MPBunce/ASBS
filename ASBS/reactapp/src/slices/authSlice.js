@@ -3,7 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
 
     userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
-    userToken: null,
+    userToken: localStorage.getItem('userToken') ? JSON.parse(localStorage.getItem('userToken')) : null,
+
+    adminInfo: localStorage.getItem('adminInfo') ? JSON.parse(localStorage.getItem('adminInfo')) : null,
+    adminToken: localStorage.getItem('adminToken') ? JSON.parse(localStorage.getItem('adminToken')) : null,
 
 }
 
@@ -21,11 +24,27 @@ const authSlice = createSlice({
         },
         logout: (state, action) => {
             state.userInfo = null;
-            localStorage.setItem('userInfo');
+            localStorage.setItem('userInfo', JSON.stringify(null));
+            state.userToken = null;
+            localStorage.setItem('userToken', JSON.stringify(null));
+        },
+        setAdminToken: (state, action) => {
+            state.adminToken = action.payload;
+            localStorage.setItem('adminToken', JSON.stringify(action.payload))
+        },
+        setAdminCredentials: (state, action) => {
+            state.adminInfo = action.payload;
+            localStorage.setItem('adminInfo', JSON.stringify(action.payload))
+        },
+        logoutAdmin: (state, action) => {
+            state.adminInfo = null;
+            localStorage.setItem('adminInfo', JSON.stringify(null));
+            state.adminToken = null;
+            localStorage.setItem('adminToken', JSON.stringify(null));
         },
     }
 })
 
-export const { setCredentials, logout, setToken } = authSlice.actions;
+export const { setCredentials, logout, setToken, setAdminToken, setAdminCredentials, logoutAdmin } = authSlice.actions;
 
 export default authSlice.reducer;

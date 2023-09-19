@@ -6,11 +6,17 @@ export const apiSlice = createApi({
         baseUrl: '',
         prepareHeaders: (headers, { getState }) => {
             const token = getState().auth.userToken
-            console.log("Token    " + token)
             if (token) {
                 console.log(token)
                 // include token in req header
                 headers.set('authorization', `Bearer ${token}`)
+                return headers
+            }
+            const adminToken = getState().auth.adminToken
+            if (adminToken) {
+                console.log(adminToken)
+                // include token in req header
+                headers.set('authorization', `Bearer ${adminToken}`)
                 return headers
             }
         },

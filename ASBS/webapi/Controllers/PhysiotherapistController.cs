@@ -75,7 +75,7 @@ namespace webapi.Controllers
 
 
             string token = CreateToken(result, _configuration);
-            return Ok(token);
+            return Ok(new { Token = token });
         }
 
         [HttpGet("GetAllPhysiotherapists")]

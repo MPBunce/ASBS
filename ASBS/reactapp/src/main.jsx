@@ -5,9 +5,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import store from './store';
 import { Provider } from 'react-redux';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import HomeScreen from './screens/HomeScreen.jsx';
-import LoginScreen from './screens/LoginScreen.jsx';
-import RegisterScreen from './screens/RegisterScreen.jsx';
+
+//User Screens
+import HomeScreen from './screens/UserScreens/HomeScreen.jsx';
+import LoginScreen from './screens/UserScreens/LoginScreen.jsx';
+import RegisterScreen from './screens/UserScreens/RegisterScreen.jsx';
+import ProfileScreen from './screens/UserScreens/ProfileScreen.jsx';
+
+//Admin Screens
+import AdminLoginScreen from './screens/AdminScreens/AdminLoginScreen.jsx';
+import AdminHomeScreen from './screens/AdminScreens/AdminHomeScreen.jsx';
+
+
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -16,9 +25,14 @@ const router = createBrowserRouter(
         <Route path='/' element={<App />}>
 
             <Route index={true} path='/' element={<HomeScreen />} />
-
             <Route path='/login' element={<LoginScreen />} />
             <Route path='/register' element={<RegisterScreen />} />
+            <Route path='/profile' element={<ProfileScreen />} />
+
+
+            <Route path='/admin' element={<AdminLoginScreen />} />
+            <Route path='/admin/home' element={<AdminHomeScreen />} />
+
         </Route>
 
 

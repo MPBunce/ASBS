@@ -1,23 +1,63 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import FormContainer from '../components/FormContainer';
+import FormContainer from '../../components/FormContainer';
+import { useRegisterMutation, useGetUserDataMutation } from '../../slices/userApiSlice';
+import { setCredentials, setToken } from '../../slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import Loader from '../../components/Loader';
 
 
 const RegisterScreen = () => {
 
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
-    const [phone, setPhone] = useState();
+    const [phoneNumber, setPhoneNumber] = useState();
 
     const [email, setEmail] = useState();
-    const [pwd, setPwd] = useState();
+    const [password, setPassword] = useState();
     const [pwdCheck, setPwdCheck] = useState();
+
+    const [register, { isLoadingRegister }] = useRegisterMutation();
+    const [getUserData, { isLoadingUserData }] = useGetUserDataMutation();
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { userInfo } = useSelector((state) => state.auth);
+    const { adminInfo } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate('/');
+        }
+        if (adminInfo) {
+            navigate('/admin/home')
+        }
+    }, navigate, userInfo, adminInfo);
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log("submit")
+
+        if (password !== pwdCheck) {
+            console.log("Passwords dont match");
+            return;
+        } 
+
+        try {
+            const res = await register({ firstName, lastName, phoneNumber, email, password }).unwrap();
+            dispatch(setToken(res.token))
+            dispatch(setCredentials(res.user))
+            navigate('/')
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.data|| error.error)
+        }
+
     }
+
 
     return (
 
@@ -56,8 +96,8 @@ const RegisterScreen = () => {
                     <Form.Control
                         type='tel'
                         placeholder='Enter Phone Number'
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                     >
 
                     </Form.Control>
@@ -80,8 +120,8 @@ const RegisterScreen = () => {
                     <Form.Control
                         type='password'
                         placeholder='Enter Password'
-                        value={pwd}
-                        onChange={(e) => setPwd(e.target.value)}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     >
 
                     </Form.Control>
@@ -98,6 +138,8 @@ const RegisterScreen = () => {
 
                     </Form.Control>
                 </Form.Group>
+
+                {isLoadingRegister && isLoadingUserData && <Loader />}
 
                 <Button className='mt-3' type='submit' variant='primary'>
                     Register
