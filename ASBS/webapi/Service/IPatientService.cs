@@ -6,6 +6,7 @@ namespace webapi.Service
     {
 
         Task<Patient> Register(Patient patient);
+        Task<List<Patient>> GetAll();
         Task<Patient> Login(string email);
         Task<Patient> GetPatient(string id);
         Task<Patient> CreateAppointment(string id, Appointment appointment);

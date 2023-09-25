@@ -54,7 +54,7 @@ namespace webapi.Controllers
             patient.FirstName = request.FirstName;
             patient.LastName = request.LastName;    
             patient.PhoneNumber = request.PhoneNumber;
-            patient.Email = request.Email;
+            patient.Email = request.Email.ToLower();
             patient.Password = passwordHash;
             patient.Appointments = null;
 
@@ -66,7 +66,7 @@ namespace webapi.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<JSON>> LoginAsync(Auth request)
         {
-            string email = request.Email;
+            string email = request.Email.ToLower();
             string password = request.Password;
             
             var result = await _patientService.Login(email);
@@ -84,6 +84,30 @@ namespace webapi.Controllers
             string token = CreateToken(result, _configuration);
             return Ok(new { Token = token });
         }
+
+        [HttpGet("GetAllPatients"), Authorize]
+        public async Task<ActionResult<List<Patient>>> GetAllPatients()
+        {
+            var parameter = "";
+            string authorization = Request.Headers["Authorization"];
+
+            if (AuthenticationHeaderValue.TryParse(authorization, out var headerValue))
+            {
+                // we have a valid AuthenticationHeaderValue that has the following details:
+                var scheme = headerValue.Scheme;
+                parameter = headerValue.Parameter;
+
+            }
+            else
+            {
+                return BadRequest("User Not Authorized");
+            }
+
+            var result = await _patientService.GetAll();
+            return Ok(result);
+
+        }
+
 
 
         [HttpGet("GetUserAndAppointment"), Authorize(Roles = "User")]
@@ -279,7 +303,7 @@ namespace webapi.Controllers
             patient.FirstName = request.FirstName;
             patient.LastName = request.LastName;
             patient.PhoneNumber = request.PhoneNumber;
-            patient.Email = request.Email;
+            patient.Email = request.Email.ToLower();
 
             if (!BCrypt.Net.BCrypt.Verify(request.Password, currentUser.Password))
             {

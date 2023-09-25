@@ -22,7 +22,6 @@ const AdminHomeScreen = () => {
     const { adminInfo } = useSelector((state) => state.auth);
 
 
-
     useEffect(() => {
         if (adminInfo == null) {
             navigate('/');

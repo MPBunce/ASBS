@@ -25,15 +25,6 @@ namespace webapi.Models
 
         [JsonProperty("specialization")]
         public string Specialization { get; set; }
-
-        [JsonProperty("workingDays")]
-        public string WorkingDays { get; set; }
-
-        [JsonProperty("workingHoursStart")]
-        public string WorkingHoursStart { get; set; }
-
-        [JsonProperty("workingHoursEnd")]
-        public string WorkingHoursEnd { get; set; }
     }
 
 }

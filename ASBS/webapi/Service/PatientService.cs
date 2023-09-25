@@ -19,6 +19,46 @@ namespace webapi.Service
             _container = cosmosClient.GetContainer(databaseName, containerName);
         }
 
+        public async Task<List<Patient>> GetAll()
+        {
+            List<Patient> resultList = new List<Patient>();
+            string query = $"SELECT DISTINCT * FROM c WHERE IS_DEFINED(c.appointments)";
+
+            var queryResultSetIterator = _container.GetItemQueryIterator<Patient>(query);
+
+            try
+            {
+                while (queryResultSetIterator.HasMoreResults)
+                {
+                    FeedResponse<Patient> currentResultSet = await queryResultSetIterator.ReadNextAsync();
+                    foreach (var item in currentResultSet)
+                    {
+                        // Process the retrieved items
+                        Console.WriteLine($"Item Id: {item}");
+
+                        // Add the item to the list
+                        resultList.Add(item);
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+
+            if (resultList.Count <= 0)
+            {
+                return null;
+            }
+
+            return resultList;
+        }
+
+
+
         public async Task<Patient> Register(Patient patient)
         {
             var item = await _container.CreateItemAsync<Patient>(patient, new PartitionKey(patient.PatientId));

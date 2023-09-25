@@ -28,6 +28,10 @@ const authSlice = createSlice({
             state.userToken = null;
             localStorage.setItem('userToken', JSON.stringify(null));
         },
+        addAppointment: (state, action) => {
+            state.userInfo.appointments.push(action.payload);
+            localStorage.setItem('userInfo', JSON.stringify(state.userInfo))
+        },
         setAdminToken: (state, action) => {
             state.adminToken = action.payload;
             localStorage.setItem('adminToken', JSON.stringify(action.payload))

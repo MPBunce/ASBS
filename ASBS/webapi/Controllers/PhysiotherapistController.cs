@@ -44,12 +44,10 @@ namespace webapi.Controllers
             physio.FirstName = request.FirstName;
             physio.LastName = request.LastName;
             physio.ContactNumber = request.ContactNumber;
-            physio.Email = request.Email;
+            physio.Email = request.Email.ToLower();
             physio.Password = passwordHash;
             physio.Specialization = request.Specialization;
-            physio.WorkingDays = request.WorkingDays;
-            physio.WorkingHoursStart = request.WorkingHoursStart;
-            physio.WorkingHoursEnd = request.WorkingHoursEnd;
+
 
             var result = await _physioService.Register(physio);
 
@@ -59,7 +57,7 @@ namespace webapi.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<String>> LoginAsync(Auth request)
         {
-            string email = request.Email;
+            string email = request.Email.ToLower();
             string password = request.Password;
 
             var result = await _physioService.Login(email);
@@ -151,11 +149,9 @@ namespace webapi.Controllers
             physio.FirstName = newPhysiotherapist.FirstName;
             physio.LastName = newPhysiotherapist.LastName;
             physio.ContactNumber = newPhysiotherapist.ContactNumber;
-            physio.Email = newPhysiotherapist.Email;
+            physio.Email = newPhysiotherapist.Email.ToLower();
             physio.Specialization = newPhysiotherapist.Specialization;
-            physio.WorkingDays = newPhysiotherapist.WorkingDays;
-            physio.WorkingHoursStart = newPhysiotherapist.WorkingHoursStart;
-            physio.WorkingHoursEnd = newPhysiotherapist.WorkingHoursEnd;
+
 
             if (!BCrypt.Net.BCrypt.Verify(newPhysiotherapist.Password, currentUser.Password))
             {

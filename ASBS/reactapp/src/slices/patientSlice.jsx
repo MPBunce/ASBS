@@ -12,13 +12,17 @@ const patientsSlice = createSlice({
     reducers: {
 
         setPatients: (state, action) => {
-            state.userToken = action.payload;
+            state.patientInfo = action.payload;
             localStorage.setItem('patientInfo', JSON.stringify(action.payload))
+        },
+        clearPatients: (state, action) => {
+            state.patientInfo = null;
+            localStorage.setItem('patientInfo', JSON.stringify(null));
         },
 
     }
 })
 
-export const { setPatients } = patientsSlice.actions;
+export const { setPatients, clearPatients } = patientsSlice.actions;
 
 export default patientsSlice.reducer;

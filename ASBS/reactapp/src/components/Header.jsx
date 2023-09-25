@@ -4,7 +4,9 @@ import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../slices/authSlice';
+import { logout, logoutAdmin } from '../slices/authSlice';
+import { clearPatients } from '../slices/patientSlice';
+import { clearPhysios } from '../slices/physioSlice';
 
 const Header = () => {
 
@@ -17,11 +19,24 @@ const Header = () => {
     const logoutHandler = () => {
         try {
             dispatch(logout());
+            dispatch(clearPatients())
+            dispatch(clearPhysios())
             navigate('/login');
         } catch (err) {
             console.error(err);
         }
     };
+
+    const adminLogoutHandler = () => {
+        try {
+            dispatch(logoutAdmin())
+            dispatch(clearPatients())
+            dispatch(clearPhysios())
+        } catch (err) {
+            console.error(err);
+            navigate('/admin');
+        }
+    }
 
     return (
         <header>
@@ -30,7 +45,7 @@ const Header = () => {
                     <LinkContainer to='/'>
                         <Navbar.Brand>Fast Physio</Navbar.Brand>
                     </LinkContainer>
-                    <Navbar.Toggle aria-controls='basic-navbar-nav' />
+                    /<Navbar.Toggle aria-controls='basic-navbar-nav' />
                     <Navbar.Collapse id='basic-navbar-nav'>
                         <Nav className='ms-auto'>
                             {userInfo ? (
@@ -50,7 +65,7 @@ const Header = () => {
                                         <LinkContainer to='/profile'>
                                             <NavDropdown.Item>Admin Profile</NavDropdown.Item>
                                         </LinkContainer>
-                                        <NavDropdown.Item onClick={logoutHandler}>
+                                        <NavDropdown.Item onClick={adminLogoutHandler}>
                                             Admin Logout
                                         </NavDropdown.Item>
                                     </NavDropdown>

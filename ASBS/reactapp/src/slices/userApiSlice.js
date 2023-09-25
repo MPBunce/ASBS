@@ -30,6 +30,19 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: data
             })
         }),
+        getAllPatients: builder.mutation({
+            query: () => ({
+                url: `${USERS_URL}/GetAllPatients`,
+                method: 'GET',
+            })
+        }),
+        userCreateAppointment: builder.mutation({
+            query: (physioId, data) => ({
+                url: `${USERS_URL}/CreateAppointment?physioId=${physioId}`,
+                method: 'POST',
+                body: data,
+            })
+        }),
 
         //Admin Endpoints
 
@@ -46,6 +59,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             })
         }),
+        getAllPhysiotherapists: builder.mutation({
+            query: () => ({
+                url: `${ADMINS_URL}/GetAllPhysiotherapists`,
+                method: 'GET',
+            })
+        }),
     })
 })
 
@@ -53,6 +72,9 @@ export const {
     useLoginMutation,
     useGetUserDataMutation,
     useRegisterMutation,
+    useUserCreateAppointmentMutation,
     useAdminLoginMutation,
     useGetAdminDataMutation,
+    useGetAllPhysiotherapistsMutation,
+    useGetAllPatientsMutation
 } = usersApiSlice

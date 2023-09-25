@@ -11,6 +11,7 @@ import HomeScreen from './screens/UserScreens/HomeScreen.jsx';
 import LoginScreen from './screens/UserScreens/LoginScreen.jsx';
 import RegisterScreen from './screens/UserScreens/RegisterScreen.jsx';
 import ProfileScreen from './screens/UserScreens/ProfileScreen.jsx';
+import CreateAppointment from './screens/UserScreens/CreateAppointment.jsx';
 
 //Admin Screens
 import AdminLoginScreen from './screens/AdminScreens/AdminLoginScreen.jsx';
@@ -28,7 +29,7 @@ const router = createBrowserRouter(
             <Route path='/login' element={<LoginScreen />} />
             <Route path='/register' element={<RegisterScreen />} />
             <Route path='/profile' element={<ProfileScreen />} />
-
+            <Route path='/create' element={< CreateAppointment />} />
 
             <Route path='/admin' element={<AdminLoginScreen />} />
             <Route path='/admin/home' element={<AdminHomeScreen />} />
