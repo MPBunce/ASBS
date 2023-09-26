@@ -11,7 +11,7 @@ namespace webapi.Models
         public Physiotherapist Physiotherapist { get; set; }
 
         [JsonProperty("appointmentDateTime")]
-        public DateTime AppointmentDateTime { get; set; }
+        public String AppointmentDateTime { get; set; }
 
         [JsonProperty("duration")]
         public int Duration { get; set; }

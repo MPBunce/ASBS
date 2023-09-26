@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
-
+import { useUserCreateAppointmentMutation } from '../../slices/userApiSlice';
 import Calendar from 'react-calendar';
 
 const CreateAppointment = () => {
@@ -29,8 +29,14 @@ const CreateAppointment = () => {
 
     }, [navigate, userInfo, adminInfo, physioInfo, patientInfo]);
 
-    const [phys, setPhys] = useState("")
-    const [date, setDate] = useState(new Date());
+    const [phys, setPhys] = useState(null)
+
+    var minDate = new Date();
+    minDate.setDate(minDate.getDate() + 1)    
+    minDate.setHours(0)
+    minDate.setMinutes(0)
+    minDate.setSeconds(0)
+    const [date, setDate] = useState(minDate);
 
     //Closed on weekends
     const [weekend, setWeekend] = useState(false);
@@ -41,27 +47,70 @@ const CreateAppointment = () => {
         } else {
             setWeekend(false)
         }
-
+        console.log(date)
     }, [date]);
 
     const updateHours = (hour) => {
         const newDate = new Date(date); // Create a new Date object
         newDate.setHours(hour); // Update the hour in the new object
         setDate(newDate); // Set the new object as the state
+        console.log(newDate)
+        setDate(newDate)
+        
     }
 
-    const submitHandler = (e) => {
-        console.log("submit")
+    const [create, { isLoadingCreate }] = useUserCreateAppointmentMutation();
+
+    const submitHandler = async (e) => {
+
+
+        const appointmentId = "";
+        const physiotherapist = {
+            "physiotherapistId": "string",
+            "firstName": "string",
+            "lastName": "string",
+            "contactNumber": "string",
+            "email": "string",
+            "password": "string",
+            "specialization": "string"
+        }
+
+        const appointmentDateTime = date
+        const duration = 60;
+        const notes = ""
+
+        var info = { appointmentId, physiotherapist, appointmentDateTime, duration, notes }
+        var data = { phys, info }
+        console.log(data)
+        try {
+            const res = await create(data).unwrap()
+            console.log(res)
+            navigate('/')
+
+        } catch (error) {
+            console.log(error)
+        }
+
     }
+
+    const [nine, setNine] = useState(false)
+    const [ten, setTen] = useState(false)
+    const [eleven, setEleven] = useState(false)
+    const [twelve, setTwelve] = useState(false)
+
+    const [thirteen, setThirteen] = useState(false)
+    const [fourteen, setFourteen] = useState(false)
+    const [fifteen, setFifteen] = useState(false)
+    const [sixteen, setSixteen] = useState(false) 
 
     return (
 
         <Container>
 
-
             <div className="d-flex my-5 flex-column">
                 <div className="d-flex justify-content-center">
-                    <Calendar onChange={setDate} value={date} minDate={new Date()}  />
+
+                    <Calendar onChange={setDate} value={date} minDate={minDate} />
                 </div>
                 <div className="">
                     <select className="form-select my-2" aria-label="physio" onChange={(e) => setPhys(e.target.value)}>
@@ -69,61 +118,59 @@ const CreateAppointment = () => {
 
                         {
 
-                                physioInfo?.map((physioInfo) => (
-                                    <option key={physioInfo.physiotherapistId}>
+                            physioInfo?.map((physioInfo) => (
+                                <option key={physioInfo.physiotherapistId} value={physioInfo.physiotherapistId}>
 
-                                        {physioInfo.firstName} {physioInfo.lastName}
+                                    {physioInfo.firstName} {physioInfo.lastName}
 
-                                    </option>
-                                ))
+                                </option>
+                            ))
                         }
 
                     </select>
                 </div>
             </div> 
 
-
-
             <h6 className="">Available Times</h6>
-
-
 
             <div className="card-body my-4">
 
-                {weekend ?
+                {weekend ? (<div>Closed on weekends</div>) : null}
+                {!weekend && !phys? (<div>Select Physio</div>) : null}
+
+                {weekend || !phys ?
                     (
-                        <> 
-                            <div>Closed on weekends</div>
-                        </>            
+                        null           
                     ) : (
+
                         <>
                     
                             <div className="row my-2">
                                 <div className="col">
-                                    <Button onClick={() => updateHours(9)} className="btn-lg w-75  btn-info">9:00 AM</Button>
+                                    <Button disabled={ nine } onClick={() => updateHours(9)} className="btn-lg w-75  btn-info">9:00 AM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button onClick={() => updateHours(10)} className="btn-lg w-75  btn-info">10:00 AM</Button>
+                                    <Button disabled={ten}  onClick={() => updateHours(10)} className="btn-lg w-75  btn-info">10:00 AM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button onClick={() => updateHours(11)} className="btn-lg w-75  btn-info">11:00 AM</Button>
+                                    <Button disabled={eleven} onClick={() => updateHours(11)} className="btn-lg w-75  btn-info">11:00 AM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button onClick={() => updateHours(12)} className="btn-lg w-75  btn-info">12:00 PM</Button>
+                                    <Button disabled={twelve} onClick={() => updateHours(12)} className="btn-lg w-75  btn-info">12:00 PM</Button>
                                 </div>
                             </div>
-                            <div className="row">
+                            <div className="row my-2">
                                 <div className="col">
-                                    <Button onClick={() => updateHours(13)} className="btn-lg w-75  btn-info">1:00 PM</Button>
+                                    <Button disabled={thirteen} onClick={() => updateHours(13)} className="btn-lg w-75  btn-info">1:00 PM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button onClick={() => updateHours(14)} className="btn-lg w-75  btn-info">2:00 PM</Button>
+                                    <Button disabled={fourteen} onClick={() => updateHours(14)} className="btn-lg w-75  btn-info">2:00 PM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button onClick={() => updateHours(15)} className="btn-lg w-75  btn-info">3:00 PM</Button>
+                                    <Button disabled={fifteen} onClick={() => updateHours(15)} className="btn-lg w-75  btn-info">3:00 PM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button onClick={() => updateHours(16)} className="btn-lg w-75  btn-info">4:00 PM</Button>
+                                    <Button disabled={sixteen} onClick={() => updateHours(16)} className="btn-lg w-75  btn-info">4:00 PM</Button>
                                 </div>
                             </div>     
                         
@@ -134,11 +181,12 @@ const CreateAppointment = () => {
 
             </div>
 
-            {date && phys ?
+            {date && phys && !weekend && date.getHours() >= 9 ?
                 (
-                    <div className="row">
+                    
+                    <div className="row pt-4">
                         <div className="col">
-                            Please confirm your appointment with {phys} on {date.toDateString()} at {date.getHours() }:00
+                            Please confirm your appointment on {date.toDateString()} at {date.getHours() }:00
                         </div>
                         <div className="col">
                             <Button onClick={() => submitHandler()} className="btn-lg w-50">Confirm</Button>
@@ -146,6 +194,7 @@ const CreateAppointment = () => {
                     </div> 
                 ) : null
             }
+
         </Container>
     )
 }

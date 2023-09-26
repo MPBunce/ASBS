@@ -44,10 +44,6 @@ const HomeScreen = () => {
         }
     }
 
-
-    var dateVariable = Date().toLocaleString()
-
-
     useEffect(() => {
 
         if (adminInfo) {
@@ -58,10 +54,41 @@ const HomeScreen = () => {
         }
         getData()
         setUserData(userInfo)
-        console.log(dateVariable)
+
     }, navigate, userInfo, adminInfo, patients, physio);
 
 
+    function checkUpcoming(appointment) {
+        const todaysDate = new Date();
+        todaysDate.setHours(0);
+        todaysDate.setMinutes(0);
+        todaysDate.setSeconds(0);
+
+        //console.log(appointment.appointmentDateTime)
+        var testDate = new Date(appointment.appointmentDateTime);
+        if (testDate.getTime() > todaysDate.getTime()) {
+            return appointment
+        }
+        
+    }
+
+    const upcomingAppointments = userInfo.appointments.filter(checkUpcoming);
+
+    function checkPast(appointment) {
+        const todaysDate = new Date();
+        todaysDate.setHours(0);
+        todaysDate.setMinutes(0);
+        todaysDate.setSeconds(0);
+
+        //console.log(appointment.appointmentDateTime)
+        var testDate = new Date(appointment.appointmentDateTime);
+        if (testDate.getTime() < todaysDate.getTime()) {
+            return appointment
+        }
+            
+    }
+
+    const pastAppointments = userInfo.appointments.filter(checkPast);
 
     return (
         <Container>
@@ -79,16 +106,29 @@ const HomeScreen = () => {
                 </div>
             </div>
 
-
-
-
             <h6 className="mb-4">Upcoming Appointments</h6>
 
-
+            {
+                upcomingAppointments.map((appointment) => (
+                <div key={appointment.appointmentId}>
+                    <p>Appointment ID: {appointment.appointmentId}</p>
+                    <p>Appointment Date: {appointment.appointmentDateTime}</p>
+                     Add more appointment details here 
+                </div>
+                ))
+            }
 
             <h6 className="mb-4">Past Appointments</h6>
 
-
+            {
+                pastAppointments.map((appointment) => (
+                    <div key={appointment.appointmentId}>
+                        <p>Appointment ID: {appointment.appointmentId}</p>
+                        <p>Appointment Date: {appointment.appointmentDateTime}</p>
+                         Add more appointment details here 
+                    </div>
+                ))
+            }
 
 
         </Container>

@@ -37,10 +37,10 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             })
         }),
         userCreateAppointment: builder.mutation({
-            query: (physioId, data) => ({
-                url: `${USERS_URL}/CreateAppointment?physioId=${physioId}`,
+            query: (data) => ({
+                url: `${USERS_URL}/CreateAppointment?physioId=${data.phys}`,
                 method: 'POST',
-                body: data,
+                body: JSON.stringify(data.info),
             })
         }),
 

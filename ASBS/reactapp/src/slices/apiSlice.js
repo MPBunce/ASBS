@@ -10,6 +10,7 @@ export const apiSlice = createApi({
                 console.log(token)
                 // include token in req header
                 headers.set('authorization', `Bearer ${token}`)
+                headers.set('Content-Type', 'application/json')
                 return headers
             }
             const adminToken = getState().auth.adminToken
@@ -17,6 +18,7 @@ export const apiSlice = createApi({
                 console.log(adminToken)
                 // include token in req header
                 headers.set('authorization', `Bearer ${adminToken}`)
+                headers.set('Content-Type', 'application/json');
                 return headers
             }
         },
