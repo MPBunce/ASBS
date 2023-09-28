@@ -60,6 +60,7 @@ const HomeScreen = () => {
 
     function checkUpcoming(appointment) {
         const todaysDate = new Date();
+        todaysDate.setDate(todaysDate.getDate() + 1)
         todaysDate.setHours(0);
         todaysDate.setMinutes(0);
         todaysDate.setSeconds(0);
@@ -72,7 +73,7 @@ const HomeScreen = () => {
         
     }
 
-    const upcomingAppointments = userInfo.appointments.filter(checkUpcoming);
+    const upcomingAppointments = userInfo.appointments.filter(checkUpcoming).sort(function (a, b) { return new Date(a.appointmentDateTime) - new Date(b.appointmentDateTime) })
 
     function checkPast(appointment) {
         const todaysDate = new Date();
@@ -88,7 +89,30 @@ const HomeScreen = () => {
             
     }
 
-    const pastAppointments = userInfo.appointments.filter(checkPast);
+    const pastAppointments = userInfo.appointments.filter(checkPast).sort(function (a, b) { return new Date(a.appointmentDateTime) - new Date(b.appointmentDateTime) });
+
+    function checkToday(appointment) {
+        const todaysDate = new Date();
+        todaysDate.setHours(0);
+        todaysDate.setMinutes(0);
+        todaysDate.setSeconds(0);
+
+        const futureDate = new Date();
+        futureDate.setDate(futureDate.getDate() + 1)
+        futureDate.setHours(0);
+        futureDate.setMinutes(0);
+        futureDate.setSeconds(0);
+
+        //console.log(appointment.appointmentDateTime)
+        var testDate = new Date(appointment.appointmentDateTime);
+        if (testDate.getTime() > todaysDate.getTime() && testDate.getTime() < futureDate.getTime()) {
+            return appointment
+        }
+
+    }
+
+    const todayAppointments = userInfo.appointments.filter(checkToday).sort(function (a, b) { return new Date(a.appointmentDateTime) - new Date(b.appointmentDateTime) });
+
 
     return (
         <Container>
@@ -106,26 +130,62 @@ const HomeScreen = () => {
                 </div>
             </div>
 
+            <h6 className="mb-4">Todays Appointments</h6>
+
+            {
+                todayAppointments.map((appointment) => (
+
+                    <div key={appointment.appointmentId} className="card my-2">
+                        <div className="card-body">
+                            <h5 className="card-title">{appointment.appointmentDateTime}</h5>
+                            <h6 className="card-subtitle mb-2 text-muted">{appointment.physiotherapist.firstName}  {appointment.physiotherapist.lastName}</h6>
+                        </div>
+                    </div>
+
+                ))
+            }
+
+
             <h6 className="mb-4">Upcoming Appointments</h6>
 
             {
                 upcomingAppointments.map((appointment) => (
-                <div key={appointment.appointmentId}>
-                    <p>Appointment ID: {appointment.appointmentId}</p>
-                    <p>Appointment Date: {appointment.appointmentDateTime}</p>
-                     Add more appointment details here 
-                </div>
+                    <div key={appointment.appointmentId} className="card my-2">
+                        <div className="card-body">
+
+
+                            <div className="row mx-md-n5 justify-content-between">
+                                <div className="col-9">
+                                    <h5 className="card-title">{appointment.appointmentDateTime}</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">{appointment.physiotherapist.firstName}  {appointment.physiotherapist.lastName}</h6>
+                                </div>
+                                <div className="col-2">
+                                    <Button className="btn-danger">Delete</Button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 ))
             }
+
 
             <h6 className="mb-4">Past Appointments</h6>
 
             {
                 pastAppointments.map((appointment) => (
-                    <div key={appointment.appointmentId}>
-                        <p>Appointment ID: {appointment.appointmentId}</p>
-                        <p>Appointment Date: {appointment.appointmentDateTime}</p>
-                         Add more appointment details here 
+                    <div key={appointment.appointmentId} className="card my-2">
+                        <div className="card-body">
+                            <div className="row mx-md-n5 justify-content-between">
+                                <div className="col-9">
+                                    <h5 className="card-title">{appointment.appointmentDateTime}</h5>
+                                    <h6 className="card-subtitle mb-2 text-muted">{appointment.physiotherapist.firstName}  {appointment.physiotherapist.lastName}</h6>
+                                </div>
+                                <div className="col-2">
+                                    <Button className="btn-info">Notes</Button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 ))
             }

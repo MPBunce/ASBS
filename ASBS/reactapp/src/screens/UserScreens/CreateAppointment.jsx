@@ -147,30 +147,30 @@ const CreateAppointment = () => {
                     
                             <div className="row my-2">
                                 <div className="col">
-                                    <Button disabled={ nine } onClick={() => updateHours(9)} className="btn-lg w-75  btn-info">9:00 AM</Button>
+                                    <Button disabled={nine} onClick={() => updateHours(9)} className="btn-lg w-75  btn-dark">9:00 AM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button disabled={ten}  onClick={() => updateHours(10)} className="btn-lg w-75  btn-info">10:00 AM</Button>
+                                    <Button disabled={ten} onClick={() => updateHours(10)} className="btn-lg w-75  btn-dark">10:00 AM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button disabled={eleven} onClick={() => updateHours(11)} className="btn-lg w-75  btn-info">11:00 AM</Button>
+                                    <Button disabled={eleven} onClick={() => updateHours(11)} className="btn-lg w-75  btn-dark">11:00 AM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button disabled={twelve} onClick={() => updateHours(12)} className="btn-lg w-75  btn-info">12:00 PM</Button>
+                                    <Button disabled={twelve} onClick={() => updateHours(12)} className="btn-lg w-75  btn-dark">12:00 PM</Button>
                                 </div>
                             </div>
                             <div className="row my-2">
                                 <div className="col">
-                                    <Button disabled={thirteen} onClick={() => updateHours(13)} className="btn-lg w-75  btn-info">1:00 PM</Button>
+                                    <Button disabled={thirteen} onClick={() => updateHours(13)} className="btn-lg w-75  btn-dark">1:00 PM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button disabled={fourteen} onClick={() => updateHours(14)} className="btn-lg w-75  btn-info">2:00 PM</Button>
+                                    <Button disabled={fourteen} onClick={() => updateHours(14)} className="btn-lg w-75  btn-dark">2:00 PM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button disabled={fifteen} onClick={() => updateHours(15)} className="btn-lg w-75  btn-info">3:00 PM</Button>
+                                    <Button disabled={fifteen} onClick={() => updateHours(15)} className="btn-lg w-75  btn-dark">3:00 PM</Button>
                                 </div>
                                 <div className="col">
-                                    <Button disabled={sixteen} onClick={() => updateHours(16)} className="btn-lg w-75  btn-info">4:00 PM</Button>
+                                    <Button disabled={sixteen} onClick={() => updateHours(16)} className="btn-lg w-75  btn-dark">4:00 PM</Button>
                                 </div>
                             </div>     
                         
