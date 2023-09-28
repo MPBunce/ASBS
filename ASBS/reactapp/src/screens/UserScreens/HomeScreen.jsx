@@ -8,9 +8,9 @@ import { setPhysios } from '../../slices/physioSlice';
 import { useDispatch } from 'react-redux';
 
 import { Container, Card, Button } from 'react-bootstrap';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { NavLink, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { FaPlus, FaRegHandPointRight } from 'react-icons/fa';
+import { FaPlus, FaNotesMedical } from 'react-icons/fa';
 
 const HomeScreen = () => {
 
@@ -173,7 +173,7 @@ const HomeScreen = () => {
             <h6 className="mb-4">Past Appointments</h6>
 
             {
-                pastAppointments.map((appointment) => (
+                pastAppointments?.map((appointment) => (
                     <div key={appointment.appointmentId} className="card my-2">
                         <div className="card-body">
                             <div className="row mx-md-n5 justify-content-between">
@@ -182,7 +182,13 @@ const HomeScreen = () => {
                                     <h6 className="card-subtitle mb-2 text-muted">{appointment.physiotherapist.firstName}  {appointment.physiotherapist.lastName}</h6>
                                 </div>
                                 <div className="col-2">
-                                    <Button className="btn-info">Notes</Button>
+
+                                    <LinkContainer to={`/notes/${appointment.appointmentId}`} >
+                                        <Nav.Link>
+                                            Notes   <FaNotesMedical />                                           
+                                        </Nav.Link>
+                                    </LinkContainer>
+
                                 </div>
                             </div>
                         </div>
