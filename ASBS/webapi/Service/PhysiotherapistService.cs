@@ -5,6 +5,7 @@ using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using webapi.Models;
+using webapi.Communications;
 
 namespace webapi.Service
 {
@@ -127,7 +128,14 @@ namespace webapi.Service
             }
             patient.Appointments[count] = newAppointment;
 
+            var returnApp = patient.Appointments.ElementAt(count);
+            string physio = $"{returnApp.Physiotherapist.FirstName} {returnApp.Physiotherapist.LastName}";
+
             var response = await _container.ReplaceItemAsync(patient, patient.PatientId, new PartitionKey(patient.PatientId));
+
+            var communicationInstance = new Communication();
+            bool test = communicationInstance.sendUpdate(patient.Email, returnApp.AppointmentDateTime, physio);
+
             return response;
 
         }

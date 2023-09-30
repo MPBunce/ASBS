@@ -7,6 +7,9 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 import { useUserCreateAppointmentMutation } from '../../slices/userApiSlice';
 import Calendar from 'react-calendar';
+import { setCredentials } from '../../slices/authSlice';
+import { updatePatient } from '../../slices/patientSlice';
+import Loader from '../../components/Loader';
 
 const CreateAppointment = () => {
 
@@ -63,6 +66,7 @@ const CreateAppointment = () => {
 
     const submitHandler = async (e) => {
 
+        setVal(true)
 
         const appointmentId = "";
         const physiotherapist = {
@@ -84,14 +88,19 @@ const CreateAppointment = () => {
         console.log(data)
         try {
             const res = await create(data).unwrap()
-            console.log(res)
+            dispatch(setCredentials(res))
+            dispatch(updatePatient(res))
             navigate('/')
 
         } catch (error) {
             console.log(error)
         }
 
+        setVal(false)
+
     }
+
+    const [val, setVal] = useState(false);
 
     const [nine, setNine] = useState(false)
     const [ten, setTen] = useState(false)
@@ -106,94 +115,103 @@ const CreateAppointment = () => {
     return (
 
         <Container>
+            {val ?
 
-            <div className="d-flex my-5 flex-column">
-                <div className="d-flex justify-content-center">
+                <Loader />
 
-                    <Calendar onChange={setDate} value={date} minDate={minDate} />
-                </div>
-                <div className="">
-                    <select className="form-select my-2" aria-label="physio" onChange={(e) => setPhys(e.target.value)}>
-                        <option hidden selected disabled>Select physio</option>
+                : (
+                    <>
 
-                        {
+                        <div className="d-flex my-5 flex-column">
+                            <div className="d-flex justify-content-center">
 
-                            physioInfo?.map((physioInfo) => (
-                                <option key={physioInfo.physiotherapistId} value={physioInfo.physiotherapistId}>
+                                <Calendar onChange={setDate} value={date} minDate={minDate} />
+                            </div>
+                            <div className="">
+                                <select className="form-select my-2" aria-label="physio" onChange={(e) => setPhys(e.target.value)}>
+                                    <option hidden selected disabled>Select physio</option>
 
-                                    {physioInfo.firstName} {physioInfo.lastName}
+                                    {
 
-                                </option>
-                            ))
+                                        physioInfo?.map((physioInfo) => (
+                                            <option key={physioInfo.physiotherapistId} value={physioInfo.physiotherapistId}>
+
+                                                {physioInfo.firstName} {physioInfo.lastName}
+
+                                            </option>
+                                        ))
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <h6 className="">Available Times</h6>
+
+                        <div className="card-body my-4">
+
+                            {weekend ? (<div>Closed on weekends</div>) : null}
+                            {!weekend && !phys ? (<div>Select Physio</div>) : null}
+
+                            {weekend || !phys ?
+                                (
+                                    null
+                                ) : (
+
+                                    <>
+
+                                        <div className="row my-2">
+                                            <div className="col">
+                                                <Button disabled={nine} onClick={() => updateHours(9)} className="btn-lg w-75  btn-dark">9:00 AM</Button>
+                                            </div>
+                                            <div className="col">
+                                                <Button disabled={ten} onClick={() => updateHours(10)} className="btn-lg w-75  btn-dark">10:00 AM</Button>
+                                            </div>
+                                            <div className="col">
+                                                <Button disabled={eleven} onClick={() => updateHours(11)} className="btn-lg w-75  btn-dark">11:00 AM</Button>
+                                            </div>
+                                            <div className="col">
+                                                <Button disabled={twelve} onClick={() => updateHours(12)} className="btn-lg w-75  btn-dark">12:00 PM</Button>
+                                            </div>
+                                        </div>
+                                        <div className="row my-2">
+                                            <div className="col">
+                                                <Button disabled={thirteen} onClick={() => updateHours(13)} className="btn-lg w-75  btn-dark">1:00 PM</Button>
+                                            </div>
+                                            <div className="col">
+                                                <Button disabled={fourteen} onClick={() => updateHours(14)} className="btn-lg w-75  btn-dark">2:00 PM</Button>
+                                            </div>
+                                            <div className="col">
+                                                <Button disabled={fifteen} onClick={() => updateHours(15)} className="btn-lg w-75  btn-dark">3:00 PM</Button>
+                                            </div>
+                                            <div className="col">
+                                                <Button disabled={sixteen} onClick={() => updateHours(16)} className="btn-lg w-75  btn-dark">4:00 PM</Button>
+                                            </div>
+                                        </div>
+
+                                    </>
+
+                                )
+                            }
+
+                        </div>
+
+                        {date && phys && !weekend && date.getHours() >= 9 ?
+                            (
+
+                                <div className="row pt-4">
+                                    <div className="col">
+                                        Please confirm your appointment on {date.toDateString()} at {date.getHours()}:00
+                                    </div>
+                                    <div className="col">
+                                        <Button onClick={() => submitHandler()} className="btn-lg w-50">Confirm</Button>
+                                    </div>
+                                </div>
+                            ) : null
                         }
 
-                    </select>
-                </div>
-            </div> 
-
-            <h6 className="">Available Times</h6>
-
-            <div className="card-body my-4">
-
-                {weekend ? (<div>Closed on weekends</div>) : null}
-                {!weekend && !phys? (<div>Select Physio</div>) : null}
-
-                {weekend || !phys ?
-                    (
-                        null           
-                    ) : (
-
-                        <>
-                    
-                            <div className="row my-2">
-                                <div className="col">
-                                    <Button disabled={nine} onClick={() => updateHours(9)} className="btn-lg w-75  btn-dark">9:00 AM</Button>
-                                </div>
-                                <div className="col">
-                                    <Button disabled={ten} onClick={() => updateHours(10)} className="btn-lg w-75  btn-dark">10:00 AM</Button>
-                                </div>
-                                <div className="col">
-                                    <Button disabled={eleven} onClick={() => updateHours(11)} className="btn-lg w-75  btn-dark">11:00 AM</Button>
-                                </div>
-                                <div className="col">
-                                    <Button disabled={twelve} onClick={() => updateHours(12)} className="btn-lg w-75  btn-dark">12:00 PM</Button>
-                                </div>
-                            </div>
-                            <div className="row my-2">
-                                <div className="col">
-                                    <Button disabled={thirteen} onClick={() => updateHours(13)} className="btn-lg w-75  btn-dark">1:00 PM</Button>
-                                </div>
-                                <div className="col">
-                                    <Button disabled={fourteen} onClick={() => updateHours(14)} className="btn-lg w-75  btn-dark">2:00 PM</Button>
-                                </div>
-                                <div className="col">
-                                    <Button disabled={fifteen} onClick={() => updateHours(15)} className="btn-lg w-75  btn-dark">3:00 PM</Button>
-                                </div>
-                                <div className="col">
-                                    <Button disabled={sixteen} onClick={() => updateHours(16)} className="btn-lg w-75  btn-dark">4:00 PM</Button>
-                                </div>
-                            </div>     
-                        
-                        </>
-
-                    )
-                }
-
-            </div>
-
-            {date && phys && !weekend && date.getHours() >= 9 ?
-                (
-                    
-                    <div className="row pt-4">
-                        <div className="col">
-                            Please confirm your appointment on {date.toDateString()} at {date.getHours() }:00
-                        </div>
-                        <div className="col">
-                            <Button onClick={() => submitHandler()} className="btn-lg w-50">Confirm</Button>
-                        </div>
-                    </div> 
-                ) : null
-            }
+                    </>
+                )}
 
         </Container>
     )

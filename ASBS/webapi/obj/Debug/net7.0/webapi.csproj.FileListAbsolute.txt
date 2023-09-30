@@ -238,3 +238,5 @@ C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\obj\De
 C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\obj\Debug\net7.0\webapi.pdb
 C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\obj\Debug\net7.0\webapi.genruntimeconfig.cache
 C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\obj\Debug\net7.0\ref\webapi.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Azure.Communication.Common.dll
+E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Azure.Communication.Email.dll

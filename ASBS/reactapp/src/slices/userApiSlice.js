@@ -43,7 +43,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: JSON.stringify(data.info),
             })
         }),
-
+        userDeleteAppointment: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}/DeleteAppointment?appointmentId=${data}`,
+                method: 'DELETE',
+            })
+        }),
         //Admin Endpoints
 
         adminLogin: builder.mutation({
@@ -73,6 +78,7 @@ export const {
     useGetUserDataMutation,
     useRegisterMutation,
     useUserCreateAppointmentMutation,
+    useUserDeleteAppointmentMutation,
     useAdminLoginMutation,
     useGetAdminDataMutation,
     useGetAllPhysiotherapistsMutation,

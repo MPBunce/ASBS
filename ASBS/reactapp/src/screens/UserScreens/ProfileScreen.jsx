@@ -29,7 +29,7 @@ const ProfileScreen = () => {
                         <h6>{userInfo.lastName}</h6>
                         <h6>{userInfo.phoneNumber}</h6>
                         <h6>{userInfo.email}</h6>
-                        <a href="#" className="btn btn-primary my-4">Update user info</a>
+                    <a href="#" className="btn btn-primary my-4" hidden>Update user info</a>
                     </div>
             </div>
 

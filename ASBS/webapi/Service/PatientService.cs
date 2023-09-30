@@ -6,6 +6,7 @@ using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using webapi.Models;
+using webapi.Communications;
 
 namespace webapi.Service
 {
@@ -211,10 +212,16 @@ namespace webapi.Service
                 }
 
             }
+            var returnApp = patient.Appointments.ElementAt(count);
+            string physio = $"{returnApp.Physiotherapist.FirstName} {returnApp.Physiotherapist.LastName}";
+
             patient.Appointments.RemoveAt(count);
 
-
             var response = await _container.ReplaceItemAsync(patient, patient.PatientId, new PartitionKey(patient.PatientId));
+
+            var communicationInstance = new Communication();
+            bool result = communicationInstance.sendDelete(patient.Email, returnApp.AppointmentDateTime, physio);
+
             return response;
 
         }

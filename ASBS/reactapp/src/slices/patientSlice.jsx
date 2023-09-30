@@ -19,10 +19,25 @@ const patientsSlice = createSlice({
             state.patientInfo = null;
             localStorage.setItem('patientInfo', JSON.stringify(null));
         },
+        updatePatient: (state, action) => {
+            const updated = JSON.parse(JSON.stringify(action.payload));
+            const index = state.patientInfo.findIndex((patient) => patient.patientId === updated.patientId);
+
+            // Add additional check for index value
+            if (index !== -1) {
+                state.patientInfo[index] = updated;
+                console.log(state.patientInfo)
+
+                localStorage.setItem('patientInfo', JSON.stringify(state.patientInfo));
+            } else {
+                console.log("Error");
+            }
+
+        }
 
     }
 })
 
-export const { setPatients, clearPatients } = patientsSlice.actions;
+export const { setPatients, clearPatients, updatePatient } = patientsSlice.actions;
 
 export default patientsSlice.reducer;

@@ -13,6 +13,8 @@ using System.Net;
 using Azure.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Azure.Cosmos.Serialization.HybridRow;
+using webapi.Communications;
+
 
 namespace webapi.Controllers
 {
@@ -26,14 +28,16 @@ namespace webapi.Controllers
         public readonly IPatientService _patientService;
         private readonly IConfiguration _configuration;
         private readonly IPhysiotherapistService _physiotherapistService;
+        private readonly Communication _communication;
 
         public PatientController(IPatientService patientsService, IConfiguration configuration, IPhysiotherapistService physiotherapistService)
         {
             _patientService = patientsService;
             _configuration = configuration;
             _physiotherapistService = physiotherapistService;
+            _communication = new Communication();
         }
-
+    
         public static Patient patient = new Patient();
         public static Appointment appointment = new Appointment();
 
@@ -45,8 +49,7 @@ namespace webapi.Controllers
 
         [HttpPost("RegisterPatient")]
         public async Task<ActionResult<Patient>> RegisterAsync(Patient request)
-        {
-            
+        {    
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
@@ -56,7 +59,7 @@ namespace webapi.Controllers
             patient.PhoneNumber = request.PhoneNumber;
             patient.Email = request.Email.ToLower();
             patient.Password = passwordHash;
-            patient.Appointments = null;
+            patient.Appointments = new List<Appointment>();
 
             var result = await _patientService.Register(patient);
             string token = CreateToken(result, _configuration);
@@ -178,7 +181,10 @@ namespace webapi.Controllers
             appointment.Duration = request.Duration;
             appointment.Notes = request.Notes;
 
+
             var result = await _patientService.CreateAppointment(claim.Value, appointment);
+            string physio = $"{appointment.Physiotherapist.FirstName} {appointment.Physiotherapist.LastName}";
+            bool test = _communication.sendConfirmation(result.Email, appointment.AppointmentDateTime, physio);
 
             return Ok(result);
 
@@ -261,7 +267,6 @@ namespace webapi.Controllers
 
 
             var result = await _patientService.DeleteAppointment(claim.Value, appointmentId);
-
             return Ok(result);
         }
 
