@@ -220,7 +220,7 @@ namespace webapi.Service
             var response = await _container.ReplaceItemAsync(patient, patient.PatientId, new PartitionKey(patient.PatientId));
 
             var communicationInstance = new Communication();
-            bool result = communicationInstance.sendDelete(patient.Email, returnApp.AppointmentDateTime, physio);
+            bool result = await communicationInstance.sendDelete(patient.Email, returnApp.AppointmentDateTime, physio);
 
             return response;
 

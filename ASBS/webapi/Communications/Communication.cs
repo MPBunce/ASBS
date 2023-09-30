@@ -12,8 +12,9 @@ namespace webapi.Communications
     public class Communication
     {
 
-        private readonly string connectionString = "";
-        public bool sendConfirmation(string userEmail, string time, string physio)
+        private readonly string connectionString ="";
+
+        public async Task<bool> sendConfirmation(string userEmail, string time, string physio)
         {
 
             EmailClient emailClient = new EmailClient(connectionString);
@@ -21,7 +22,7 @@ namespace webapi.Communications
 
             try
             {
-                EmailSendOperation emailSendOperation = emailClient.Send(
+                EmailSendOperation emailSendOperation = await emailClient.SendAsync(
                     WaitUntil.Completed,
                     senderAddress: "DoNotReply@30daec63-345a-4d9e-ac84-a5310ec0b54e.azurecomm.net",
                     recipientAddress: userEmail,
@@ -40,14 +41,14 @@ namespace webapi.Communications
             }
         }
 
-        public bool sendDelete(string userEmail, string time, string physio)
+        public async Task<bool> sendDelete(string userEmail, string time, string physio)
         {
             EmailClient emailClient = new EmailClient(connectionString);
             System.Threading.CancellationToken Token = default;
 
             try
             {
-                EmailSendOperation emailSendOperation = emailClient.Send(
+                EmailSendOperation emailSendOperation = await emailClient.SendAsync(
                     WaitUntil.Completed,
                     senderAddress: "DoNotReply@30daec63-345a-4d9e-ac84-a5310ec0b54e.azurecomm.net",
                     recipientAddress: userEmail,
@@ -66,14 +67,14 @@ namespace webapi.Communications
             }
         }
 
-        public bool sendUpdate(string userEmail, string time, string physio)
+        public async Task<bool> sendUpdate(string userEmail, string time, string physio)
         {
             EmailClient emailClient = new EmailClient(connectionString);
             System.Threading.CancellationToken Token = default;
 
             try
             {
-                EmailSendOperation emailSendOperation = emailClient.Send(
+                EmailSendOperation emailSendOperation = await emailClient.SendAsync(
                     WaitUntil.Completed,
                     senderAddress: "DoNotReply@30daec63-345a-4d9e-ac84-a5310ec0b54e.azurecomm.net",
                     recipientAddress: userEmail,

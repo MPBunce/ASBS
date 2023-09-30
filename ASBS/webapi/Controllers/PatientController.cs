@@ -184,7 +184,7 @@ namespace webapi.Controllers
 
             var result = await _patientService.CreateAppointment(claim.Value, appointment);
             string physio = $"{appointment.Physiotherapist.FirstName} {appointment.Physiotherapist.LastName}";
-            bool test = _communication.sendConfirmation(result.Email, appointment.AppointmentDateTime, physio);
+            bool test = await _communication.sendConfirmation(result.Email, appointment.AppointmentDateTime, physio);
 
             return Ok(result);
 

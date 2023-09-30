@@ -134,7 +134,7 @@ namespace webapi.Service
             var response = await _container.ReplaceItemAsync(patient, patient.PatientId, new PartitionKey(patient.PatientId));
 
             var communicationInstance = new Communication();
-            bool test = communicationInstance.sendUpdate(patient.Email, returnApp.AppointmentDateTime, physio);
+            bool test = await communicationInstance.sendUpdate(patient.Email, returnApp.AppointmentDateTime, physio);
 
             return response;
 
