@@ -40,7 +40,32 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
     };
 });
 
+DotNetEnv.Env.Load();
 
+// Connection to cosmodb
+builder.Services.AddSingleton<IPatientService>(options =>
+{
+
+
+    string container = Environment.GetEnvironmentVariable("CONTAINER");
+    string db = Environment.GetEnvironmentVariable("DB");
+    string key = Environment.GetEnvironmentVariable("COSMOSKEY");
+
+    var cosmosClient = new Microsoft.Azure.Cosmos.CosmosClient("https://asbs.documents.azure.com/", key);
+
+    return new PatientService(cosmosClient, db, container);
+});
+
+builder.Services.AddSingleton<IPhysiotherapistService>(options =>
+{
+    string container = Environment.GetEnvironmentVariable("CONTAINER");
+    string db = Environment.GetEnvironmentVariable("DB");
+    string key = Environment.GetEnvironmentVariable("COSMOSKEY");
+
+    var cosmosClient = new Microsoft.Azure.Cosmos.CosmosClient("https://asbs.documents.azure.com/", key);
+
+    return new PhysiotherapistService(cosmosClient, db, container);
+});
 
 var app = builder.Build();
 

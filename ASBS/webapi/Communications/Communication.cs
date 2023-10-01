@@ -12,7 +12,7 @@ namespace webapi.Communications
     public class Communication
     {
 
-        private readonly string connectionString ="";
+        private readonly string connectionString = Environment.GetEnvironmentVariable("EMAILKEY");
 
         public async Task<bool> sendConfirmation(string userEmail, string time, string physio)
         {

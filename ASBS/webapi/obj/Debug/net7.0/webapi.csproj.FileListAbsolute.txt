@@ -242,3 +242,5 @@ E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Azure.Communication.Co
 E:\Programming\Projects\ASBS\ASBS\webapi\bin\Debug\net7.0\Azure.Communication.Email.dll
 C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Azure.Communication.Common.dll
 C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Azure.Communication.Email.dll
+C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\DotNetEnv.dll
+C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Debug\net7.0\Sprache.dll
