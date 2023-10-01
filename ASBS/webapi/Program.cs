@@ -16,6 +16,13 @@ builder.Services.AddEndpointsApiExplorer();
 //AUTH STUFF
 builder.Services.AddSwaggerGen(options =>
 {
+
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Minimal API",
+        Version = "v1"
+    });
+
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
