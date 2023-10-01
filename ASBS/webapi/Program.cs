@@ -6,13 +6,12 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+DotNetEnv.Env.Load();
+
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
-
-
 
 //AUTH STUFF
 builder.Services.AddSwaggerGen(options =>
@@ -40,7 +39,6 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
     };
 });
 
-DotNetEnv.Env.Load();
 
 // Connection to cosmodb
 builder.Services.AddSingleton<IPatientService>(options =>
@@ -75,9 +73,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseSwagger();
-app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
