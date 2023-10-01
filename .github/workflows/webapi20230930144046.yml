@@ -50,6 +50,12 @@ jobs:
       with:
         name: webapp
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      env: 
+        CI: true
+        EMAILKEY: ${{ env.EMAILKEY }}
+        CONTAINER: ${{ env.CONTAINER }}
+        DB: ${{ env.DB }}
+        COSMOSKEY: ${{ env.COSMOSKEY }}
   deploy:
     runs-on: windows-latest
     needs: build
