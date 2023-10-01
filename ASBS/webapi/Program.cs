@@ -65,6 +65,8 @@ builder.Services.AddSingleton<IPhysiotherapistService>(options =>
     return new PhysiotherapistService(cosmosClient, db, container);
 });
 
+builder.Services.AddEndpointsApiExplorer();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -74,6 +76,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
