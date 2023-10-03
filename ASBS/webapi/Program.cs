@@ -23,6 +23,8 @@ builder.Services.AddSwaggerGen(options =>
         Type = SecuritySchemeType.ApiKey
     });
 
+    options.SwaggerDoc("v1", new() { Title = "ASBS API", Version = "v1" });
+
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
@@ -71,15 +73,18 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI( c => c.SwaggerEndpoint(
+        "/swagger/v1/swagger.json",
+        "v1"
+   ));
 }
 
 
 app.UseSwagger();
-app.UseSwaggerUI( options =>
-{
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-});
+app.UseSwaggerUI(c => c.SwaggerEndpoint(
+    "/swagger/v1/swagger.json",
+    "v1"
+));
 
 
 app.UseHttpsRedirection();
