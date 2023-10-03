@@ -23,7 +23,12 @@ builder.Services.AddSwaggerGen(options =>
         Type = SecuritySchemeType.ApiKey
     });
 
-    options.SwaggerDoc("v1", new() { Title = "ASBS API", Version = "v1" });
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Minimal API",
+        Version = "v1"
+    });
+
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
