@@ -84,3 +84,9 @@ C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\obj\Re
 C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\obj\Release\net7.0\webapi.pdb
 C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\obj\Release\net7.0\webapi.genruntimeconfig.cache
 C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\obj\Release\net7.0\ref\webapi.dll
+C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Release\net7.0\Azure.Data.AppConfiguration.dll
+C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Release\net7.0\Azure.Messaging.EventGrid.dll
+C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Release\net7.0\Azure.Security.KeyVault.Secrets.dll
+C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Release\net7.0\Microsoft.Azure.AppConfiguration.AspNetCore.dll
+C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Release\net7.0\Microsoft.Extensions.Configuration.AzureAppConfiguration.dll
+C:\Users\tenzi\OneDrive\Desktop\Matts Things\Programming\ASBS\ASBS\webapi\bin\Release\net7.0\appsettings.Production.json
